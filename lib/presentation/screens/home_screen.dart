@@ -1,89 +1,94 @@
+/// Copyright (C) 2024 Jill Heske
+/// This file is part of flutter-clean-architecture-drift-retrofit.
+///
+/// flutter-clean-architecture-drift-retrofit is free software: you can redistribute it and/or modify
+/// it under the terms of the Apache License, Version 2.0, as published by
+/// the Apache Software Foundation.
+///
+/// flutter-clean-architecture-drift-retrofit is distributed in the hope that it will be useful,
+/// but WITHOUT ANY WARRANTY; without even the implied warranty of
+/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+/// Apache License, Version 2.0 for more details.
+///
+/// You should have received a copy of the Apache License, Version 2.0
+/// along with flutter-clean-architecture-drift-retrofit. If not, see <https:///www.apache.org/licenses/LICENSE-2.0>.
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../core/injection_container.dart';
+import '../../data/datasource/database/app_database.dart';
+
+// This class represents the HomeScreen, which is a StatefulWidget used as the main
+// screen of the application. It contains a Scaffold with an AppBar and body content
+// to display buttons for navigating to different screens within the application.
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+  const HomeScreen({super.key}); // Constructor for HomeScreen.
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState(); // Create state for HomeScreen.
 }
 
+// State class for HomeScreen.
 class _HomeScreenState extends State<HomeScreen> {
-  int _counter = 0;
+  // Database instance obtained from the service locator.
+  final database = serviceLocator.get<AppDatabase>();
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  // Override initState method to perform initialization.
+  @override
+  void initState() {
+    super.initState();
   }
 
+  // Build method to construct the UI for HomeScreen.
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    // Return Scaffold widget with AppBar and body content.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the HomeScreen object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: const Text('Flutter with Drift and Retrofit'), // Set app bar title.
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          children: [
+            // Button to navigate to the UsersScreen.
+            ElevatedButton.icon(
+              onPressed: () {
+                GoRouter.of(context).push('/users'); // Navigate to UsersScreen.
+              },
+              icon: const Icon(Icons.person), // Icon for users.
+              label: const Text('Users'), // Text for users.
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            const SizedBox(height: 20), // Spacer.
+            // Button to navigate to the ArtistsScreen.
+            ElevatedButton.icon(
+              onPressed: () {
+                GoRouter.of(context).push('/artists'); // Navigate to ArtistsScreen.
+              },
+              icon: const Icon(Icons.mic), // Icon for artists.
+              label: const Text('Artists'), // Text for artists.
+            ),
+            const SizedBox(height: 20), // Spacer.
+            // Button to navigate to the SongsScreen.
+            ElevatedButton.icon(
+              onPressed: () {
+                GoRouter.of(context).push('/songs'); // Navigate to SongsScreen.
+              },
+              icon: const Icon(Icons.music_note), // Icon for songs.
+              label: const Text('Songs'), // Text for songs.
+            ),
+            const SizedBox(height: 20), // Spacer.
+            // Button to navigate to the DatabaseViewsScreen.
+            ElevatedButton.icon(
+              onPressed: () {
+                GoRouter.of(context).push('/database-view'); // Navigate to DatabaseViewsScreen.
+              },
+              icon: const Icon(Icons.data_array), // Icon for database view.
+              label: const Text('Database View'), // Text for database view.
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

@@ -9,9 +9,7 @@ final appRouter = GoRouter(
     // Route for the home screen.
     GoRoute(
       path: '/',
-      builder: (context, state) => const HomeScreen(
-        title: 'Flutter Demo Home Page',
-      ),
+      builder: (context, state) => const HomeScreen(),
     ),
   ],
 );

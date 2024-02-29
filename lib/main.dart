@@ -12,10 +12,10 @@ import 'data/repository/db_repository.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await initializeServiceLocator();
+
   final database = serviceLocator.get<AppDatabase>();
   final repository = serviceLocator.get<DatabaseRepository>();
-
-  await initializeServiceLocator();
 
   final themeStr =
       await rootBundle.loadString('assets/themes/app_painter_theme_F44336_redorange_light.json');
