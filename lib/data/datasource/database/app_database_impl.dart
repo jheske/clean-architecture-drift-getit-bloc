@@ -2,18 +2,16 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
 
+import '../entity/model_typedefs.dart';
 import 'app_database.dart';
 
 part '.generated/app_database_impl.g.dart';
 
 typedef Val<T> = Value<T>;
-
-final databaseProvider = Provider<AppDatabase>((ref) => AppDatabaseImpl());
 
 @DriftDatabase(include: {'schema.drift'})
 class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
@@ -26,12 +24,11 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
   /// build_runner generates the implementation of '_' CRUD methods
   /// based on the drift schema in the `tables.drift` file.
   ///
-
   @override
   Stream<List<UserTable>> watchUsers() => _getUsers().watch();
 
   @override
-  Future<List<UserTable>> getUsers() => _getUsers().get();
+  Future<List<UserModel>> getUsers() => _getUsers().get();
 
   @override
   Future<UserTable?> getUser(int id) => _getUserById(id).getSingleOrNull();

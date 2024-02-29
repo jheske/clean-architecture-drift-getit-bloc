@@ -56,16 +56,16 @@ class UserEntity {
     );
   }
 
-  static Future<UserEntity?> convertTableToEntity(
-    UserModel? userTable,
+  static Future<UserEntity?> toEntity(
+    UserModel? userModel,
     PlaylistEntity? playlist,
   ) async {
-    if (userTable != null) {
+    if (userModel != null) {
       return UserEntity(
-        id: userTable.id,
-        username: userTable.username,
-        musicStyle: userTable.musicStyle,
-        favoriteSongName: userTable.favoriteSongName,
+        id: userModel.id,
+        username: userModel.username,
+        musicStyle: userModel.musicStyle,
+        favoriteSongName: userModel.favoriteSongName,
         playlist: playlist,
       );
     } else {

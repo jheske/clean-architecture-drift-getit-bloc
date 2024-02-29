@@ -6,6 +6,7 @@ import '../data/datasource/database/app_database_impl.dart';
 import '../data/datasource/remote/app_api_service.dart';
 import '../data/repository/db_repository.dart';
 import '../data/repository/db_repository_impl.dart';
+import '../presentation/usecase/get_users_usecase.dart';
 
 ///
 /// serviceLocator code adapted from this [SO answer](https://stackoverflow.com/a/76085459/5277309).
@@ -30,6 +31,19 @@ Future<void> initializeServiceLocator() async {
   serviceLocator.registerSingleton<DatabaseRepository>(
     DatabaseRepositoryImpl(serviceLocator(), serviceLocator()),
   );
+
+  serviceLocator.registerSingleton<GetUsersUseCase>(GetUsersUseCase(serviceLocator()));
+  /*
+
+  //Blocs
+  sl.registerFactory<GetUsersFromDbBloc>(
+    ()=> LocalUsersBloc(sl())
+  );
+
+  sl.registerFactory<GetUserFromDbBloc>(
+    ()=> LocalUserBloc(sl(),sl(),sl())
+  );
+   */
 }
 
 /// Generic function to retrieve an instance of a registered type from the service locator.
