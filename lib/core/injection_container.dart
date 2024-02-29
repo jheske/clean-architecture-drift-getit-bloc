@@ -6,6 +6,7 @@ import '../data/datasource/database/app_database_impl.dart';
 import '../data/datasource/remote/app_api_service.dart';
 import '../data/repository/db_repository.dart';
 import '../data/repository/db_repository_impl.dart';
+import '../presentation/usecase/get_user_usecase.dart';
 import '../presentation/usecase/get_users_usecase.dart';
 
 ///
@@ -33,6 +34,7 @@ Future<void> initializeServiceLocator() async {
   );
 
   serviceLocator.registerSingleton<GetUsersUseCase>(GetUsersUseCase(serviceLocator()));
+  serviceLocator.registerSingleton<GetUserUseCase>(GetUserUseCase(serviceLocator()));
   /*
 
   //Blocs

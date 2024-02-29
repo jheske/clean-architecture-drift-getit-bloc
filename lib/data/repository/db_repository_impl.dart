@@ -29,9 +29,15 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
     return users;
   }
 
-  //
-  // @override
-  // Future<UserTable?> getUser(int id) => _getUserById(id).getSingleOrNull();
+  @override
+  Future<UserEntity?> getUser(int id) async {
+    final user = await _db.getUser(id);
+    if (user != null) {
+      return await UserEntity.toEntity(user, PlaylistEntity());
+    } else {
+      return null;
+    }
+  }
   //
   // @override
   // Future<List<ArtistTable>> getArtists() => _getArtists().get();

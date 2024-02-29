@@ -1,4 +1,4 @@
-import '../../domain/entity/user_entity.dart';
+import '../../../domain/entity/user_entity.dart';
 
 abstract class LocalUsersState {
   final List<UserEntity>? users;

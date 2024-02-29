@@ -6,7 +6,7 @@ abstract class DatabaseRepository {
   // Future<ArtistTable?> getArtist(int id);
   // // Stream<List<UserTable>> watchUsers();
   Future<List<UserEntity>> getUsers();
-  // Future<UserTable?> getUser(int id);
+  Future<UserEntity?> getUser(int id);
   // // Stream<List<SongTable>> watchSongs();
   // Future<List<SongTable>> getSongs();
   // Future<SongTable?> getSong(int id);

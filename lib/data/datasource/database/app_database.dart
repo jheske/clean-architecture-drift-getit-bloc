@@ -7,7 +7,7 @@ abstract class AppDatabase {
   Future<ArtistTable?> getArtist(int id);
   Stream<List<UserTable>> watchUsers();
   Future<List<UserModel>> getUsers();
-  Future<UserTable?> getUser(int id);
+  Future<UserModel?> getUser(int id);
   Stream<List<SongTable>> watchSongs();
   Future<List<SongTable>> getSongs();
   Future<SongTable?> getSong(int id);

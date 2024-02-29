@@ -3,15 +3,13 @@ import 'package:clean_architecture_drift_getit_bloc/presentation/usecase/usecase
 import '../../data/repository/db_repository.dart';
 import '../../domain/entity/user_entity.dart';
 
-class GetUsersUseCase implements UseCase<List<UserEntity>, void> {
+class GetUserUseCase implements UseCase<UserEntity?, int> {
   final DatabaseRepository _repository;
 
-  GetUsersUseCase(this._repository);
+  GetUserUseCase(this._repository);
 
   @override
-  Future<List<UserEntity>> call({void params}) {
-    final users = _repository.getUsers();
-
-    return users;
+  Future<UserEntity?> call({int? params}) async {
+    return _repository.getUser(params!);
   }
 }
