@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
-import '../data/datasource/local/app_database.dart';
-import '../data/datasource/local/app_database_impl.dart';
+import '../data/datasource/database/app_database.dart';
+import '../data/datasource/database/app_database_impl.dart';
 import '../data/datasource/remote/app_api_service.dart';
-import '../data/repository/repository.dart';
-import '../data/repository/repository_impl.dart';
+import '../data/repository/db_repository.dart';
+import '../data/repository/db_repository_impl.dart';
 
 ///
 /// serviceLocator code adapted from this [SO answer](https://stackoverflow.com/a/76085459/5277309).
@@ -27,8 +27,8 @@ Future<void> initializeServiceLocator() async {
   serviceLocator.registerSingleton<AppDatabase>(database);
 
   // Initializing repository and registering the instance.
-  serviceLocator.registerSingleton<Repository>(
-    RepositoryImpl(serviceLocator(), serviceLocator()),
+  serviceLocator.registerSingleton<DatabaseRepository>(
+    DatabaseRepositoryImpl(serviceLocator(), serviceLocator()),
   );
 }
 

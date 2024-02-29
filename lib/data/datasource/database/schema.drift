@@ -1,0 +1,63 @@
+CREATE TABLE [users] (
+    id INT NOT NULL PRIMARY KEY,
+    username TEXT NOT NULL,
+    music_style TEXT NOT NULL,
+    favorite_song_name TEXT NOT NULL
+) As UserTable;
+
+
+CREATE TABLE artists (
+    id INT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    age INT NOT NULL,
+    music_style TEXT NOT NULL,
+    isActive INTEGER DEFAULT 0
+) as ArtistTable;
+
+
+CREATE TABLE [songs] (
+    id INT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    duration INT NOT NULL,
+    artist_id INT NOT NULL REFERENCES artists(id) ON DELETE CASCADE
+) as SongTable;
+
+
+CREATE TABLE [playlists] (
+    id INT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT unique_user_playlist UNIQUE (user_id)
+) as PlaylistTable;
+
+CREATE TABLE [playlistsWithSongs] (
+    id INT NOT NULL PRIMARY KEY AUTOINCREMENT,
+    song_id INT NOT NULL REFERENCES songs(id),
+    playlist_id INT NOT NULL REFERENCES playlists(id),
+    CONSTRAINT songIdWithPlaylistId UNIQUE (song_id, playlist_id)
+) as PlaylistWithSongsTable;
+
+
+_getUsers:
+    SELECT * FROM [users];
+
+_getUserById:
+    SELECT * FROM [users]
+    WHERE id = :id
+    LIMIT 1;
+
+_getArtists:
+    SELECT * FROM [artists];
+
+_getArtistById:
+    SELECT * FROM [artists]
+    WHERE id = :id
+    LIMIT 1;
+
+_getSongs:
+    SELECT * FROM [songs];
+
+_getSongById:
+    SELECT * FROM [songs]
+    WHERE id = :id
+    LIMIT 1;

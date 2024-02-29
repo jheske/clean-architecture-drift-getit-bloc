@@ -1,5 +1,5 @@
 // Define the application router using GoRouter.
-import 'package:clean_architecture_drift_getit_bloc/presentation/screens/HomeScreen.dart';
+import 'package:clean_architecture_drift_getit_bloc/presentation/screens/home_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(
@@ -9,7 +9,9 @@ final appRouter = GoRouter(
     // Route for the home screen.
     GoRoute(
       path: '/',
-      builder: (context, state) => HomeScreen(),
+      builder: (context, state) => const HomeScreen(
+        title: 'Flutter Demo Home Page',
+      ),
     ),
   ],
 );

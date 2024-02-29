@@ -2,13 +2,18 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
 
 import 'app_database.dart';
 
-part '.generated/app_database_impl.g.dart'; // Include the generated part file.
+part '.generated/app_database_impl.g.dart';
+
+typedef Val<T> = Value<T>;
+
+final databaseProvider = Provider<AppDatabase>((ref) => AppDatabaseImpl());
 
 @DriftDatabase(include: {'schema.drift'})
 class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
@@ -16,6 +21,38 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
 
   @override
   int get schemaVersion => 1;
+
+  ///
+  /// build_runner generates the implementation of '_' CRUD methods
+  /// based on the drift schema in the `tables.drift` file.
+  ///
+
+  @override
+  Stream<List<UserTable>> watchUsers() => _getUsers().watch();
+
+  @override
+  Future<List<UserTable>> getUsers() => _getUsers().get();
+
+  @override
+  Future<UserTable?> getUser(int id) => _getUserById(id).getSingleOrNull();
+
+  @override
+  Stream<List<ArtistTable>> watchArtists() => _getArtists().watch();
+
+  @override
+  Future<List<ArtistTable>> getArtists() => _getArtists().get();
+
+  @override
+  Future<ArtistTable?> getArtist(int id) => _getArtistById(id).getSingleOrNull();
+
+  @override
+  Stream<List<SongTable>> watchSongs() => _getSongs().watch();
+
+  @override
+  Future<List<SongTable>> getSongs() => _getSongs().get();
+
+  @override
+  Future<SongTable?> getSong(int id) => _getSongById(id).getSingleOrNull();
 }
 
 // Function to open the database connection.
