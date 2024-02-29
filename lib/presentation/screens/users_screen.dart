@@ -14,9 +14,12 @@
 /// along with flutter-clean-architecture-drift-retrofit. If not, see <https:///www.apache.org/licenses/LICENSE-2.0>.
 import 'package:clean_architecture_drift_getit_bloc/data/datasource/database/app_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/bloc/user/users_bloc.dart';
+import '../../core/bloc/user/users_state.dart';
 import '../../core/injection_container.dart';
 import '../../data/repository/db_repository.dart';
 import '../../domain/entity/user_entity.dart';
@@ -47,60 +50,57 @@ class _UsersScreenState extends State<UsersScreen> {
   Widget build(BuildContext context) {
     // Return Scaffold widget with AppBar and body content.
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Users'), // Set app bar title.
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back), // Back arrow icon.
-          onPressed: () {
-            GoRouter.of(context).pop(); // Navigate back when the back arrow button is pressed.
-          },
-        ),
-      ),
-      body: Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text('My Users'), // Display title.
-          ),
-          Expanded(
-            child: Center(
-              child: FutureBuilder<List<UserEntity>>(
-                future: getUsers(), // Fetch list of users asynchronously.
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator(); // Show loading indicator while waiting for data.
-                  } else {
-                    if (snapshot.hasError) {
-                      return Text(
-                          'Error: ${snapshot.error}'); // Show error message if data fetching fails.
-                    } else {
-                      final users = snapshot.data!; // Get list of users.
-                      return ListView.builder(
-                        itemCount: users.length,
-                        itemBuilder: (context, index) {
-                          final user = users[index]; // Get current user.
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 64, vertical: 8.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Provider.of<UserEntity>(context, listen: false)
-                                    .setUser(user); // Set selected user using Provider.
-                                GoRouter.of(context).push(
-                                    '/user/${user.id}/${user.username}'); // Navigate to user details screen.
-                              },
-                              child: Text(user.username), // Display user username on button.
-                            ),
-                          );
-                        },
-                      );
-                    }
-                  }
-                },
-              ),
-            ),
-          ),
-        ],
+      appBar: _buildAppBar(),
+      body: BlocBuilder<LocalUsersBloc, LocalUsersState>(
+        builder: (_, state) {
+          if (state is LocalUsersLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is LocalUsersDone) {
+            return _buildUserList(state.users ?? []);
+          } else if (state is LocalUsersError) {
+            return Center(child: Text(state.exception?.message ?? 'An error occurred'));
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
+  }
+
+  _buildAppBar() {
+    return AppBar(
+      title: const Text('Users'), // Set app bar title.
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back), // Back arrow icon.
+        onPressed: () {
+          GoRouter.of(context).pop(); // Navigate back when the back arrow button is pressed.
+        },
+      ),
+    );
+  }
+
+  _buildUserList(List<UserEntity> users) {
+    return users.isEmpty
+        ? Center(
+            child: Text('No users found'),
+          )
+        : ListView.builder(
+            itemCount: users.length,
+            itemBuilder: (context, index) {
+              final user = users[index]; // Get current user.
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 64, vertical: 8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Provider.of<UserEntity>(context, listen: false)
+                        .setUser(user); // Set selected user using Provider.
+                    GoRouter.of(context).push(
+                        '/user/${user.id}/${user.username}'); // Navigate to user details screen.
+                  },
+                  child: Text(user.username), // Display user username on button.
+                ),
+              );
+            },
+          );
   }
 }

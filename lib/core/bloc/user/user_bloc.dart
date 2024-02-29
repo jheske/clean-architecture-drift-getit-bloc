@@ -18,7 +18,15 @@ class LocalUserBloc extends Bloc<LocalUserEvent, LocalUserState> {
     if (user != null) {
       emit(LocalUserDone(user));
     } else {
-      emit(LocalUserDone(UserEntity()));
+      emit(
+        LocalUserDone(
+          UserEntity(
+              id: 1,
+              username: 'Mock user',
+              favoriteSongName: 'Mock song',
+              musicStyle: 'Mock style'),
+        ),
+      );
     }
   }
 }

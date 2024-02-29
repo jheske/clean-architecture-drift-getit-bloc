@@ -3,8 +3,11 @@ import 'dart:convert';
 import 'package:clean_architecture_drift_getit_bloc/presentation/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:json_theme/json_theme.dart';
 
+import 'core/bloc/user/users_bloc.dart';
+import 'core/bloc/user/users_event.dart';
 import 'core/injection_container.dart';
 import 'data/datasource/database/app_database.dart';
 import 'data/repository/db_repository.dart';
@@ -34,10 +37,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Flutter Clean Architecture',
-      theme: theme,
-      routerConfig: appRouter,
-    );
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<LocalUsersBloc>(
+            create: (context) => serviceLocator()..add(const GetUsers()),
+          ),
+        ],
+        child: MaterialApp.router(
+          title: 'Flutter Clean Architecture',
+          theme: theme,
+          routerConfig: appRouter,
+        ));
   }
 }

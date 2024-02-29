@@ -1,3 +1,4 @@
+import 'package:clean_architecture_drift_getit_bloc/core/bloc/user/users_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -8,6 +9,7 @@ import '../data/repository/db_repository.dart';
 import '../data/repository/db_repository_impl.dart';
 import '../presentation/usecase/get_user_usecase.dart';
 import '../presentation/usecase/get_users_usecase.dart';
+import 'bloc/user/user_bloc.dart';
 
 ///
 /// serviceLocator code adapted from this [SO answer](https://stackoverflow.com/a/76085459/5277309).
@@ -21,7 +23,7 @@ Future<void> initializeServiceLocator() async {
   // Registering Dio instance as a singleton for making HTTP requests.
   serviceLocator.registerSingleton<Dio>(Dio());
 
-  // Registering MusicApiService with the provided Dio instance.
+  // Registering ApiService with the provided Dio instance.
   serviceLocator.registerSingleton<ApiService>(ApiService(serviceLocator()));
 
   // Initializing database connection and registering the instance.
@@ -33,19 +35,13 @@ Future<void> initializeServiceLocator() async {
     DatabaseRepositoryImpl(serviceLocator(), serviceLocator()),
   );
 
+  //  UseCases are registered as singletons.
   serviceLocator.registerSingleton<GetUsersUseCase>(GetUsersUseCase(serviceLocator()));
   serviceLocator.registerSingleton<GetUserUseCase>(GetUserUseCase(serviceLocator()));
-  /*
 
-  //Blocs
-  sl.registerFactory<GetUsersFromDbBloc>(
-    ()=> LocalUsersBloc(sl())
-  );
-
-  sl.registerFactory<GetUserFromDbBloc>(
-    ()=> LocalUserBloc(sl(),sl(),sl())
-  );
-   */
+  //  Blocs are registered as factories.
+  serviceLocator.registerFactory<LocalUsersBloc>(() => LocalUsersBloc(serviceLocator()));
+  serviceLocator.registerFactory<LocalUserBloc>(() => LocalUserBloc(serviceLocator()));
 }
 
 /// Generic function to retrieve an instance of a registered type from the service locator.
