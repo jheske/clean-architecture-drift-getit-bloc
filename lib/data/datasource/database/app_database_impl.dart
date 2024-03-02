@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
-import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -90,12 +89,6 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
     for (final model in tables) {
       await insertArtist(model);
     }
-
-    final firstArtist = await _getArtistById(2).getSingle();
-
-    if (kDebugMode) {
-      print('[insertArtistList] first artist name: ${firstArtist.name}');
-    }
   }
 
   @override
@@ -103,13 +96,17 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
     final companion = SongCompanion.insert(
       id: Value(model.id),
       name: model.name,
-      duration: model.duration,
+      duration: Value(model.duration),
+      genre: Value(model.genre),
+      album: Value(model.album),
       artistId: model.artistId,
     );
     final id = await _insertSong(
       companion.id.value,
       companion.name.value,
       companion.duration.value,
+      companion.genre.value,
+      companion.album.value,
       companion.artistId.value,
     );
     return _getSongById(id).getSingle();
@@ -120,11 +117,17 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
     for (final model in models) {
       await insertSong(model);
     }
+  }
 
-    final firstArtist = await _getArtistById(2).getSingle();
+  @override
+  Future<UserModel> insertUser(UserTable model) async {
+    return UserModel(id: -1, username: '', musicStyle: '', favoriteSongName: '');
+  }
 
-    if (kDebugMode) {
-      print('[insertArtistList] first artist name: ${firstArtist.name}');
+  @override
+  Future<void> insertUserList(List<UserModel> models) async {
+    for (final model in models) {
+      await insertUser(model);
     }
   }
 }

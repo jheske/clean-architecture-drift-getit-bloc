@@ -18,8 +18,10 @@ CREATE TABLE [artist] (
 CREATE TABLE [song] (
     id INT NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
-    duration INT NOT NULL,
-    artist_id INT NOT NULL REFERENCES artist(id) ON DELETE CASCADE
+    duration INT,
+    genre Text,
+    album Text,
+    artistId INT NOT NULL REFERENCES artist(id) ON DELETE CASCADE
 ) as SongTable;
 
 CREATE TABLE [playlist] (
@@ -73,8 +75,8 @@ _insertArtist:
     VALUES (:id, :name, :age, :music_style, :is_active);
 
 _insertSong:
-    INSERT INTO [song] (id, name, duration, artist_id)
-    VALUES (:id, :name, :duration, :artist_id);
+    INSERT INTO [song] (id, name, duration, genre, album, artistId)
+    VALUES (:id, :name, :duration, :genre, :album, :artistId);
 
 -- DELETE OPERATIONS
 

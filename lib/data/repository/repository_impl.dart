@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:clean_architecture_drift_getit_bloc/data/repository/repository.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../domain/entity/playlist_entity.dart';
 import '../../domain/entity/user_entity.dart';
@@ -19,6 +20,14 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   Future<void> saveToDatabase(MusicModel musicModel) async {
     _db.insertArtistList(musicModel.artists);
     _db.insertSongList(musicModel.songs);
+
+    final firstArtist = await _db.getArtist(1);
+    final firstSong = await _db.getSong(1);
+
+    if (kDebugMode) {
+      print('[saveToDatabase] first artist name: ${firstArtist?.name ?? 'none'}');
+      print('[saveToDatabase] first song name: ${firstSong?.name ?? 'none'}');
+    }
   }
 
   ///
