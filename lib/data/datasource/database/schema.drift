@@ -1,63 +1,80 @@
-CREATE TABLE [users] (
+-- CREATE TABLES
+
+CREATE TABLE [user] (
     id INT NOT NULL PRIMARY KEY,
     username TEXT NOT NULL,
     music_style TEXT NOT NULL,
     favorite_song_name TEXT NOT NULL
 ) As UserTable;
 
-
-CREATE TABLE artists (
+CREATE TABLE [artist] (
     id INT NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
     age INT NOT NULL,
     music_style TEXT NOT NULL,
-    isActive INTEGER DEFAULT 0
-) as ArtistTable;
+    is_active INTEGER DEFAULT 0
+);
 
-
-CREATE TABLE [songs] (
+CREATE TABLE [song] (
     id INT NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
     duration INT NOT NULL,
-    artist_id INT NOT NULL REFERENCES artists(id) ON DELETE CASCADE
+    artist_id INT NOT NULL REFERENCES artist(id) ON DELETE CASCADE
 ) as SongTable;
 
-
-CREATE TABLE [playlists] (
+CREATE TABLE [playlist] (
     id INT NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
-    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    user_id INT NOT NULL REFERENCES user(id) ON DELETE CASCADE,
     CONSTRAINT unique_user_playlist UNIQUE (user_id)
 ) as PlaylistTable;
 
-CREATE TABLE [playlistsWithSongs] (
+CREATE TABLE [playlistWithSongs] (
     id INT NOT NULL PRIMARY KEY AUTOINCREMENT,
-    song_id INT NOT NULL REFERENCES songs(id),
-    playlist_id INT NOT NULL REFERENCES playlists(id),
+    song_id INT NOT NULL REFERENCES song(id),
+    playlist_id INT NOT NULL REFERENCES playlist(id),
     CONSTRAINT songIdWithPlaylistId UNIQUE (song_id, playlist_id)
 ) as PlaylistWithSongsTable;
 
+--- READ/SELECT OPERATIONS
 
 _getUsers:
-    SELECT * FROM [users];
+    SELECT * FROM [user];
 
 _getUserById:
-    SELECT * FROM [users]
+    SELECT * FROM [user]
     WHERE id = :id
     LIMIT 1;
 
 _getArtists:
-    SELECT * FROM [artists];
+    SELECT * FROM [artist];
 
 _getArtistById:
-    SELECT * FROM [artists]
+    SELECT * FROM [artist]
     WHERE id = :id
     LIMIT 1;
 
 _getSongs:
-    SELECT * FROM [songs];
+    SELECT * FROM [song];
 
 _getSongById:
-    SELECT * FROM [songs]
+    SELECT * FROM [song]
     WHERE id = :id
     LIMIT 1;
+
+-- CREATE and UPDATE OPERATIONS
+
+_insertUser:
+    INSERT INTO [user] (id, username, music_style, favorite_song_name)
+    VALUES (:id, :username, :music_style, :favorite_song_name);
+
+_insertArtist:
+    INSERT INTO [artist] (id, name, age, music_style, is_active)
+    VALUES (:id, :name, :age, :music_style, :is_active);
+
+_insertSong:
+    INSERT INTO [song] (id, name, duration, artist_id)
+    VALUES (:id, :name, :duration, :artist_id);
+
+-- DELETE OPERATIONS
+

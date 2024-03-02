@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -20,6 +21,20 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
   @override
   int get schemaVersion => 1;
 
+  @override
+  Future<void> clearDatabase() async {
+    await delete(artist).go();
+
+    // await transaction(() async {
+    //   // Deleting tables in reverse topological order to avoid foreign-key conflicts
+    //   final tables = allTables.toList().reversed;
+    //
+    //   for (final table in allTables) {
+    //     await delete(table).go();
+    //   }
+    // });
+  }
+
   ///
   /// build_runner generates the implementation of '_' CRUD methods
   /// based on the drift schema in the `tables.drift` file.
@@ -34,13 +49,13 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
   Future<UserTable?> getUser(int id) => _getUserById(id).getSingleOrNull();
 
   @override
-  Stream<List<ArtistTable>> watchArtists() => _getArtists().watch();
+  Stream<List<ArtistData>> watchArtists() => _getArtists().watch();
 
   @override
-  Future<List<ArtistTable>> getArtists() => _getArtists().get();
+  Future<List<ArtistData>> getArtists() => _getArtists().get();
 
   @override
-  Future<ArtistTable?> getArtist(int id) => _getArtistById(id).getSingleOrNull();
+  Future<ArtistData?> getArtist(int id) => _getArtistById(id).getSingleOrNull();
 
   @override
   Stream<List<SongTable>> watchSongs() => _getSongs().watch();
@@ -50,6 +65,46 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
 
   @override
   Future<SongTable?> getSong(int id) => _getSongById(id).getSingleOrNull();
+
+  @override
+  Future<ArtistModel> insertArtist(ArtistModel model) async {
+    final companion = ArtistCompanion.insert(
+      id: Value(model.id),
+      name: model.name,
+      age: model.age,
+      musicStyle: model.musicStyle,
+      isActive: Value(model.isActive),
+    );
+    final id = await _insertArtist(
+      companion.id.value,
+      companion.name.value,
+      companion.age.value,
+      companion.musicStyle.value,
+      companion.isActive.value,
+    );
+    return _getArtistById(id).getSingle();
+  }
+
+  @override
+  Future<void> insertArtistList(List<ArtistModel> tables) async {
+    //  final firstArtist = tables.first;
+    // final model = await insertArtist(firstArtist);
+    transaction(() async {
+      for (final model in tables) {
+        await insertArtist(model);
+      }
+    });
+    final firstArtist = await _getArtistById(2).getSingle();
+
+    if (kDebugMode) {
+      print('[insertArtistList] first artist name: ${firstArtist.name}');
+    }
+  }
+
+  // @override
+  // Future<void> insertArtistList(List<ArtistTable> tables) async {
+  //   transaction(() => )
+  // }
 }
 
 // Function to open the database connection.

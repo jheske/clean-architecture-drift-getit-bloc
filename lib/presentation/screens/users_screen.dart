@@ -16,12 +16,11 @@ import 'package:clean_architecture_drift_getit_bloc/data/datasource/database/app
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 import '../../core/bloc/user/users_bloc.dart';
 import '../../core/bloc/user/users_state.dart';
 import '../../core/injection_container.dart';
-import '../../data/repository/db_repository.dart';
+import '../../data/repository/repository.dart';
 import '../../domain/entity/user_entity.dart';
 
 // This class represents the UsersScreen, which is a StatefulWidget used to display
@@ -81,7 +80,7 @@ class _UsersScreenState extends State<UsersScreen> {
 
   _buildUserList(List<UserEntity> users) {
     return users.isEmpty
-        ? Center(
+        ? const Center(
             child: Text('No users found'),
           )
         : ListView.builder(
@@ -92,10 +91,9 @@ class _UsersScreenState extends State<UsersScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 64, vertical: 8.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    Provider.of<UserEntity>(context, listen: false)
-                        .setUser(user); // Set selected user using Provider.
-                    GoRouter.of(context).push(
-                        '/user/${user.id}/${user.username}'); // Navigate to user details screen.
+                    // Set selected user using Provider.
+                    GoRouter.of(context)
+                        .push('/user/${user.id}'); // Navigate to user details screen.
                   },
                   child: Text(user.username), // Display user username on button.
                 ),

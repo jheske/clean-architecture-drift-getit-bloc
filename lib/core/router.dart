@@ -1,5 +1,6 @@
 // Define the application router using GoRouter.
 import 'package:clean_architecture_drift_getit_bloc/presentation/screens/home_screen.dart';
+import 'package:clean_architecture_drift_getit_bloc/presentation/screens/user_screen.dart';
 import 'package:clean_architecture_drift_getit_bloc/presentation/screens/users_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -18,6 +19,13 @@ final appRouter = GoRouter(
       path: '/users',
       builder: (context, state) =>
           const UsersScreen(), // Build the UsersScreen when this route is matched.
+    ),
+    GoRoute(
+      name: 'user',
+      path: '/user/:id',
+      builder: (context, GoRouterState state) {
+        return const UserScreen(); // Build the UserScreen when this route is matched.
+      },
     ),
   ],
 );

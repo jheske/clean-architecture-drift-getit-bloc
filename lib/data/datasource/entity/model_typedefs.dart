@@ -13,4 +13,4 @@ import '../database/app_database_impl.dart';
 
 typedef UserModel = UserTable;
 typedef SongModel = SongTable;
-typedef ArtistModel = ArtistTable;
+typedef ArtistModel = ArtistData;

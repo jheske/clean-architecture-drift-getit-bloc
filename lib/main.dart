@@ -1,16 +1,18 @@
 import 'dart:convert';
 
-import 'package:clean_architecture_drift_getit_bloc/presentation/router.dart';
+import 'package:clean_architecture_drift_getit_bloc/core/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:json_theme/json_theme.dart';
 
+import 'core/bloc/user/user_bloc.dart';
+import 'core/bloc/user/user_event.dart';
 import 'core/bloc/user/users_bloc.dart';
 import 'core/bloc/user/users_event.dart';
 import 'core/injection_container.dart';
 import 'data/datasource/database/app_database.dart';
-import 'data/repository/db_repository.dart';
+import 'data/repository/repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +21,11 @@ void main() async {
 
   final database = serviceLocator.get<AppDatabase>();
   final repository = serviceLocator.get<DatabaseRepository>();
+
+  database.clearDatabase();
+
+  final music = await repository.fetchMusic();
+  repository.saveToDatabase(music);
 
   final themeStr =
       await rootBundle.loadString('assets/themes/app_painter_theme_F44336_redorange_light.json');
@@ -41,6 +48,9 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider<LocalUsersBloc>(
             create: (context) => serviceLocator()..add(const GetUsers()),
+          ),
+          BlocProvider<LocalUserBloc>(
+            create: (context) => serviceLocator()..add(const GetUser()),
           ),
         ],
         child: MaterialApp.router(
