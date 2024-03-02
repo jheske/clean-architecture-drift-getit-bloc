@@ -18,6 +18,7 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   @override
   Future<void> saveToDatabase(MusicModel musicModel) async {
     _db.insertArtistList(musicModel.artists);
+    _db.insertSongList(musicModel.songs);
   }
 
   ///

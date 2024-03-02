@@ -23,13 +23,14 @@ part '.generated/music_model.freezed.dart';
 class MusicModel with _$MusicModel {
   const factory MusicModel({
     @JsonKey(name: 'Users') required List<UserModel> users,
-    //  @JsonKey(name: 'Songs') required List<SongModel> songs,
     @JsonKey(name: 'Artists') required List<ArtistModel> artists,
+    @JsonKey(name: 'Songs') required List<SongModel> songs,
   }) = _MusicModel;
 
   factory MusicModel.init() => const MusicModel(
         users: [],
         artists: [],
+        songs: [],
       );
 
   factory MusicModel.fromJson(Map<String, dynamic> json) {
@@ -48,14 +49,14 @@ class MusicModel with _$MusicModel {
         .toList();
 
     // Extract the list of song JSON objects
-    // final List<dynamic> songJsonList = json['Songs'];
-    // // Convert each song JSON object to SongModel using its fromJson method
-    // final List<SongModel> songs = songJsonList
-    //     .map((songJson) => SongModel.fromJson(songJson as Map<String, dynamic>))
-    //     .toList();
+    final List<dynamic> songJsonList = json['Songs'];
+    // Convert each song JSON object to SongModel using its fromJson method
+    final List<SongModel> songs = songJsonList
+        .map((songJson) => SongModel.fromJson(songJson as Map<String, dynamic>))
+        .toList();
 
     // Return a new MusicModel object with the lists of UserModel, SongModel, and ArtistModel objects
-    return MusicModel(users: users, artists: artists);
+    return MusicModel(users: users, artists: artists, songs: songs);
   }
 
   const MusicModel._();

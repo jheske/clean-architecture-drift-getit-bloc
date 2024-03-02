@@ -14,6 +14,10 @@ abstract class AppDatabase {
   Future<List<SongTable>> getSongs();
   Future<SongTable?> getSong(int id);
   // CREATE/INSERT and UPDATE Methods
-  Future<ArtistModel> insertArtist(ArtistModel artist);
-  Future<void> insertArtistList(List<ArtistModel> tables);
+  Future<ArtistModel> insertArtist(ArtistModel model);
+  Future<void> insertArtistList(List<ArtistModel> models);
+  Future<SongModel> insertSong(SongModel model);
+  Future<void> insertSongList(List<SongModel> models);
+  Future<UserModel> insertUser(UserModel model);
+  Future<void> insertUserList(List<UserModel> models);
 }

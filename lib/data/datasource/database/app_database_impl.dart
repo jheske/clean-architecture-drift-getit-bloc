@@ -87,13 +87,10 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
 
   @override
   Future<void> insertArtistList(List<ArtistModel> tables) async {
-    //  final firstArtist = tables.first;
-    // final model = await insertArtist(firstArtist);
-    transaction(() async {
-      for (final model in tables) {
-        await insertArtist(model);
-      }
-    });
+    for (final model in tables) {
+      await insertArtist(model);
+    }
+
     final firstArtist = await _getArtistById(2).getSingle();
 
     if (kDebugMode) {
@@ -101,10 +98,35 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
     }
   }
 
-  // @override
-  // Future<void> insertArtistList(List<ArtistTable> tables) async {
-  //   transaction(() => )
-  // }
+  @override
+  Future<SongModel> insertSong(SongModel model) async {
+    final companion = SongCompanion.insert(
+      id: Value(model.id),
+      name: model.name,
+      duration: model.duration,
+      artistId: model.artistId,
+    );
+    final id = await _insertSong(
+      companion.id.value,
+      companion.name.value,
+      companion.duration.value,
+      companion.artistId.value,
+    );
+    return _getSongById(id).getSingle();
+  }
+
+  @override
+  Future<void> insertSongList(List<SongModel> models) async {
+    for (final model in models) {
+      await insertSong(model);
+    }
+
+    final firstArtist = await _getArtistById(2).getSingle();
+
+    if (kDebugMode) {
+      print('[insertArtistList] first artist name: ${firstArtist.name}');
+    }
+  }
 }
 
 // Function to open the database connection.
