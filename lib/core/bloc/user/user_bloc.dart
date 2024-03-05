@@ -5,21 +5,21 @@ import 'package:clean_architecture_drift_getit_bloc/core/bloc/user/user_state.da
 import '../../../domain/entity/user_entity.dart';
 import '../../../presentation/usecase/get_user_usecase.dart';
 
-class LocalUserBloc extends Bloc<UserEvent, LocalUserState> {
+class UserBloc extends Bloc<UserEvent, UserState> {
   final GetUserUseCase _getUserUseCase;
 
-  LocalUserBloc(this._getUserUseCase) : super(const LocalUserLoading()) {
+  UserBloc(this._getUserUseCase) : super(const UserLoading()) {
     on<GetUser>(onGetUser);
   }
 
-  void onGetUser(GetUser getUser, Emitter<LocalUserState> emit) async {
+  void onGetUser(GetUser getUser, Emitter<UserState> emit) async {
     final user = await _getUserUseCase(params: getUser.id);
 
     if (user != null) {
-      emit(LocalUserDone(user));
+      emit(UserDone(user));
     } else {
       emit(
-        LocalUserDone(
+        UserDone(
           UserEntity(
               id: 1,
               username: 'Mock user 1',

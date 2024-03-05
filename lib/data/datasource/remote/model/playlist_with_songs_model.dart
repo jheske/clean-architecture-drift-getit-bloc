@@ -14,24 +14,24 @@
 /// along with flutter-clean-architecture-drift-retrofit. If not, see <https:///www.apache.org/licenses/LICENSE-2.0>.
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part '.generated/playlist_with_song_model.freezed.dart';
-part '.generated/playlist_with_song_model.g.dart';
+part '.generated/playlist_with_songs_model.freezed.dart';
+part '.generated/playlist_with_songs_model.g.dart';
 
 @freezed
-class PlaylistWithSongModel with _$PlaylistWithSongModel {
-  const factory PlaylistWithSongModel({
+class PlaylistWithSongsModel with _$PlaylistWithSongsModel {
+  const factory PlaylistWithSongsModel({
     int? songId,
     int? playlistId,
-  }) = _PlaylistWithSongModel;
+  }) = _PlaylistWithSongsModel;
 
-  const PlaylistWithSongModel._();
+  const PlaylistWithSongsModel._();
 
-  factory PlaylistWithSongModel.fromJson(Map<String, dynamic> json) =>
-      _$PlaylistWithSongModelFromJson(json);
+  factory PlaylistWithSongsModel.fromJson(Map<String, dynamic> json) =>
+      _$PlaylistWithSongsModelFromJson(json);
 
-  static Future<List<PlaylistWithSongModel>> fromJsonArray(List jsonArray) async {
+  static Future<List<PlaylistWithSongsModel>> fromJsonArray(List jsonArray) async {
     return jsonArray.map((value) {
-      return PlaylistWithSongModel.fromJson(value);
+      return PlaylistWithSongsModel.fromJson(value);
     }).toList();
   }
 }

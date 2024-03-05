@@ -9,6 +9,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
 
 import '../remote/model/artist_model.dart';
+import '../remote/model/playlist_model.dart';
+import '../remote/model/playlist_with_songs_model.dart';
 import '../remote/model/song_model.dart';
 import '../remote/model/user_model.dart';
 import 'app_database.dart';
@@ -30,11 +32,11 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
     if (kDebugMode) {
       print('[clearDatabase]: deleting all tables');
     }
-    await delete(artist).go();
-    await delete(song).go();
-    await delete(user).go();
-    await delete(playlist).go();
-    await delete(playlistWithSongs).go();
+    await artist.deleteAll();
+    await song.deleteAll();
+    await user.deleteAll();
+    await playlist.deleteAll();
+    await playlistwithsongs.deleteAll();
   }
 
   ///
@@ -71,6 +73,12 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
   @override
   Future<PlaylistTable?> getPlaylistByUserId(int id) {
     return _getPlaylistByUserId(id).getSingleOrNull();
+  }
+
+  @override
+  Future<List<SongTable>> getPlaylistWithSongs(int id) async {
+    final songTable = await _getPlaylistWithSongs(id).get();
+    return songTable;
   }
 
   @override
@@ -128,9 +136,10 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
       companion.musicStyle.value,
       companion.favoriteSongName.value,
     );
-    // if (model.playlist != null) {
-    //   await playlist!.();
-    // }
+
+    if (model.playlist != null) {
+      await insertPlaylist(model.playlist!);
+    }
 
     final user = await _getUserById(id).getSingleOrNull();
     if (kDebugMode) {
@@ -144,6 +153,35 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
     for (final model in models) {
       await insertUser(model);
     }
+  }
+
+  Future<void> _savePlaylistSongs(List<int?> songIdList, int playlistId) async {
+    await Future.forEach(songIdList, (songId) async {
+      // PlaylistModel has details about the playlist (name, etc) plus its SongModel list.
+      // A SongModel has all the song details.
+      // PlaylistWithSongsModel has a songId and a playlistId, used in join queries to
+      // get all songs for a playlist.
+      final model = PlaylistWithSongsModel(songId: songId, playlistId: playlistId);
+      final companion = model.toCompanion();
+      await _insertPlaylistWithSongs(
+        companion.songId.value,
+        companion.playlistId.value,
+      );
+    });
+  }
+
+  Future<int> insertPlaylist(PlaylistModel playlist) async {
+    final companion = playlist.toCompanion();
+    final id = await _insertPlaylist(
+      companion.id.value,
+      companion.name.value,
+      companion.userId.value,
+    );
+
+    if (playlist.songs != null) {
+      await _savePlaylistSongs(playlist.songs!, playlist.id);
+    }
+    return id;
   }
 
   // Future<void> insertPlaylistWithSongs(PlaylistModel model) async {

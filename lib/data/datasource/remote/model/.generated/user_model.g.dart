@@ -11,8 +11,11 @@ _$RemoteUserModelImpl _$$RemoteUserModelImplFromJson(
     _$RemoteUserModelImpl(
       id: json['id'] as int?,
       username: json['username'] as String?,
-      musicStyle: json['musicStyle'] as String?,
-      favoriteSongName: json['favoriteSongName'] as String?,
+      musicStyle: json['music_style'] as String?,
+      favoriteSongName: json['favorite_song_name'] as String?,
+      playlist: json['playlist'] == null
+          ? null
+          : PlaylistModel.fromJson(json['playlist'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$RemoteUserModelImplToJson(
@@ -20,6 +23,7 @@ Map<String, dynamic> _$$RemoteUserModelImplToJson(
     <String, dynamic>{
       'id': instance.id,
       'username': instance.username,
-      'musicStyle': instance.musicStyle,
-      'favoriteSongName': instance.favoriteSongName,
+      'music_style': instance.musicStyle,
+      'favorite_song_name': instance.favoriteSongName,
+      'playlist': instance.playlist,
     };

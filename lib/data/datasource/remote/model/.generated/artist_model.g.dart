@@ -10,16 +10,16 @@ _$ArtistModelImpl _$$ArtistModelImplFromJson(Map<String, dynamic> json) =>
     _$ArtistModelImpl(
       id: json['id'] as int,
       name: json['name'] as String?,
-      musicStyle: json['musicStyle'] as String?,
+      musicStyle: json['music_style'] as String?,
       age: json['age'] as int?,
-      isActive: json['isActive'] as int?,
+      isActive: json['is_active'] as int?,
     );
 
 Map<String, dynamic> _$$ArtistModelImplToJson(_$ArtistModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'musicStyle': instance.musicStyle,
+      'music_style': instance.musicStyle,
       'age': instance.age,
-      'isActive': instance.isActive,
+      'is_active': instance.isActive,
     };

@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 /// Copyright (C) 2024 Jill Heske
 /// This file is part of flutter-clean-architecture-drift-retrofit.
 ///
@@ -22,9 +24,9 @@ class ArtistModel with _$ArtistModel {
   const factory ArtistModel({
     required int id,
     String? name,
-    String? musicStyle,
+    @JsonKey(name: 'music_style') String? musicStyle,
     int? age,
-    int? isActive,
+    @JsonKey(name: 'is_active') int? isActive,
   }) = _ArtistModel;
 
   const ArtistModel._();

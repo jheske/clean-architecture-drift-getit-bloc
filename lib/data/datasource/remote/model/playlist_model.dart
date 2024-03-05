@@ -24,7 +24,7 @@ class PlaylistModel with _$PlaylistModel {
     required int id,
     @JsonKey(name: "user_id") required int userId,
     String? name,
-    @JsonKey(name: "songs") List<int?>? songs,
+    List<int?>? songs,
   }) = _PlaylistModel;
 
   const PlaylistModel._();

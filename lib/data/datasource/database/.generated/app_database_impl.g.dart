@@ -594,7 +594,7 @@ class Song extends Table with TableInfo<Song, SongTable> {
   static const VerificationMeta _artistIdMeta =
       const VerificationMeta('artistId');
   late final GeneratedColumn<int> artistId = GeneratedColumn<int>(
-      'artistId', aliasedName, false,
+      'artist_id', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       $customConstraints: 'NOT NULL REFERENCES artist(id)ON DELETE CASCADE');
@@ -632,9 +632,9 @@ class Song extends Table with TableInfo<Song, SongTable> {
       context.handle(
           _albumMeta, album.isAcceptableOrUnknown(data['album']!, _albumMeta));
     }
-    if (data.containsKey('artistId')) {
+    if (data.containsKey('artist_id')) {
       context.handle(_artistIdMeta,
-          artistId.isAcceptableOrUnknown(data['artistId']!, _artistIdMeta));
+          artistId.isAcceptableOrUnknown(data['artist_id']!, _artistIdMeta));
     } else if (isInserting) {
       context.missing(_artistIdMeta);
     }
@@ -658,7 +658,7 @@ class Song extends Table with TableInfo<Song, SongTable> {
       album: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}album']),
       artistId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}artistId'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}artist_id'])!,
     );
   }
 
@@ -699,7 +699,7 @@ class SongTable extends DataClass implements Insertable<SongTable> {
     if (!nullToAbsent || album != null) {
       map['album'] = Variable<String>(album);
     }
-    map['artistId'] = Variable<int>(artistId);
+    map['artist_id'] = Variable<int>(artistId);
     return map;
   }
 
@@ -727,7 +727,7 @@ class SongTable extends DataClass implements Insertable<SongTable> {
       duration: serializer.fromJson<int?>(json['duration']),
       genre: serializer.fromJson<String?>(json['genre']),
       album: serializer.fromJson<String?>(json['album']),
-      artistId: serializer.fromJson<int>(json['artistId']),
+      artistId: serializer.fromJson<int>(json['artist_id']),
     );
   }
   @override
@@ -739,7 +739,7 @@ class SongTable extends DataClass implements Insertable<SongTable> {
       'duration': serializer.toJson<int?>(duration),
       'genre': serializer.toJson<String?>(genre),
       'album': serializer.toJson<String?>(album),
-      'artistId': serializer.toJson<int>(artistId),
+      'artist_id': serializer.toJson<int>(artistId),
     };
   }
 
@@ -823,7 +823,7 @@ class SongCompanion extends UpdateCompanion<SongTable> {
       if (duration != null) 'duration': duration,
       if (genre != null) 'genre': genre,
       if (album != null) 'album': album,
-      if (artistId != null) 'artistId': artistId,
+      if (artistId != null) 'artist_id': artistId,
     });
   }
 
@@ -863,7 +863,7 @@ class SongCompanion extends UpdateCompanion<SongTable> {
       map['album'] = Variable<String>(album.value);
     }
     if (artistId.present) {
-      map['artistId'] = Variable<int>(artistId.value);
+      map['artist_id'] = Variable<int>(artistId.value);
     }
     return map;
   }
@@ -1096,12 +1096,12 @@ class PlaylistCompanion extends UpdateCompanion<PlaylistTable> {
   }
 }
 
-class PlaylistWithSongs extends Table
-    with TableInfo<PlaylistWithSongs, PlaylistWithSongsTable> {
+class Playlistwithsongs extends Table
+    with TableInfo<Playlistwithsongs, PlaylistWithSongsTable> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  PlaylistWithSongs(this.attachedDatabase, [this._alias]);
+  Playlistwithsongs(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
@@ -1128,7 +1128,7 @@ class PlaylistWithSongs extends Table
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'playlistWithSongs';
+  static const String $name = 'playlistwithsongs';
   @override
   VerificationContext validateIntegrity(
       Insertable<PlaylistWithSongsTable> instance,
@@ -1175,8 +1175,8 @@ class PlaylistWithSongs extends Table
   }
 
   @override
-  PlaylistWithSongs createAlias(String alias) {
-    return PlaylistWithSongs(attachedDatabase, alias);
+  Playlistwithsongs createAlias(String alias) {
+    return Playlistwithsongs(attachedDatabase, alias);
   }
 
   @override
@@ -1202,8 +1202,8 @@ class PlaylistWithSongsTable extends DataClass
     return map;
   }
 
-  PlaylistWithSongsCompanion toCompanion(bool nullToAbsent) {
-    return PlaylistWithSongsCompanion(
+  PlaylistwithsongsCompanion toCompanion(bool nullToAbsent) {
+    return PlaylistwithsongsCompanion(
       id: Value(id),
       songId: Value(songId),
       playlistId: Value(playlistId),
@@ -1256,17 +1256,17 @@ class PlaylistWithSongsTable extends DataClass
           other.playlistId == this.playlistId);
 }
 
-class PlaylistWithSongsCompanion
+class PlaylistwithsongsCompanion
     extends UpdateCompanion<PlaylistWithSongsTable> {
   final Value<int> id;
   final Value<int> songId;
   final Value<int> playlistId;
-  const PlaylistWithSongsCompanion({
+  const PlaylistwithsongsCompanion({
     this.id = const Value.absent(),
     this.songId = const Value.absent(),
     this.playlistId = const Value.absent(),
   });
-  PlaylistWithSongsCompanion.insert({
+  PlaylistwithsongsCompanion.insert({
     this.id = const Value.absent(),
     required int songId,
     required int playlistId,
@@ -1284,9 +1284,9 @@ class PlaylistWithSongsCompanion
     });
   }
 
-  PlaylistWithSongsCompanion copyWith(
+  PlaylistwithsongsCompanion copyWith(
       {Value<int>? id, Value<int>? songId, Value<int>? playlistId}) {
-    return PlaylistWithSongsCompanion(
+    return PlaylistwithsongsCompanion(
       id: id ?? this.id,
       songId: songId ?? this.songId,
       playlistId: playlistId ?? this.playlistId,
@@ -1310,7 +1310,7 @@ class PlaylistWithSongsCompanion
 
   @override
   String toString() {
-    return (StringBuffer('PlaylistWithSongsCompanion(')
+    return (StringBuffer('PlaylistwithsongsCompanion(')
           ..write('id: $id, ')
           ..write('songId: $songId, ')
           ..write('playlistId: $playlistId')
@@ -1325,7 +1325,7 @@ abstract class _$AppDatabaseImpl extends GeneratedDatabase {
   late final Artist artist = Artist(this);
   late final Song song = Song(this);
   late final Playlist playlist = Playlist(this);
-  late final PlaylistWithSongs playlistWithSongs = PlaylistWithSongs(this);
+  late final Playlistwithsongs playlistwithsongs = Playlistwithsongs(this);
   Selectable<UserTable> _getUsers() {
     return customSelect('SELECT * FROM user', variables: [], readsFrom: {
       user,
@@ -1380,6 +1380,19 @@ abstract class _$AppDatabaseImpl extends GeneratedDatabase {
         }).asyncMap(playlist.mapFromRow);
   }
 
+  Selectable<SongTable> _getPlaylistWithSongs(int playlistId) {
+    return customSelect(
+        'SELECT s.* FROM song AS s INNER JOIN playlistwithsongs AS ps ON ps.song_id = s.id INNER JOIN artist AS a ON a.id = s.artist_id WHERE ps.playlist_id = ?1',
+        variables: [
+          Variable<int>(playlistId)
+        ],
+        readsFrom: {
+          song,
+          playlistwithsongs,
+          artist,
+        }).asyncMap(song.mapFromRow);
+  }
+
   Future<int> _insertUser(
       int id, String username, String musicStyle, String favoriteSongName) {
     return customInsert(
@@ -1412,7 +1425,7 @@ abstract class _$AppDatabaseImpl extends GeneratedDatabase {
   Future<int> _insertSong(int id, String name, int? duration, String? genre,
       String? album, int artistId) {
     return customInsert(
-      'INSERT INTO song (id, name, duration, genre, album, artistId) VALUES (?1, ?2, ?3, ?4, ?5, ?6)',
+      'INSERT INTO song (id, name, duration, genre, album, artist_id) VALUES (?1, ?2, ?3, ?4, ?5, ?6)',
       variables: [
         Variable<int>(id),
         Variable<String>(name),
@@ -1437,11 +1450,11 @@ abstract class _$AppDatabaseImpl extends GeneratedDatabase {
     );
   }
 
-  Future<int> _insertPlaylistWithSongs(int songId, int playlistId) {
+  Future<int> _insertPlaylistWithSongs(int songId, int plaaylistId) {
     return customInsert(
-      'INSERT INTO playlistWithSongs (song_id, playlist_id) VALUES (?1, ?2)',
-      variables: [Variable<int>(songId), Variable<int>(playlistId)],
-      updates: {playlistWithSongs},
+      'INSERT INTO playlistwithsongs (song_id, playlist_id) VALUES (?1, ?2)',
+      variables: [Variable<int>(songId), Variable<int>(plaaylistId)],
+      updates: {playlistwithsongs},
     );
   }
 
@@ -1450,7 +1463,7 @@ abstract class _$AppDatabaseImpl extends GeneratedDatabase {
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [user, artist, song, playlist, playlistWithSongs];
+      [user, artist, song, playlist, playlistwithsongs];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
         [

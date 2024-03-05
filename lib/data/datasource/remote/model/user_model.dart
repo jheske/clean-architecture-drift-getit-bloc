@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 /// Copyright (C) 2024 Jill Heske
 /// This file is part of flutter-clean-architecture-drift-retrofit.
 ///
@@ -12,6 +14,7 @@
 ///
 /// You should have received a copy of the Apache License, Version 2.0
 /// along with flutter-clean-architecture-drift-retrofit. If not, see <https:///www.apache.org/licenses/LICENSE-2.0>.
+import 'package:clean_architecture_drift_getit_bloc/data/datasource/remote/model/playlist_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part '.generated/user_model.freezed.dart';
@@ -22,9 +25,9 @@ class UserModel with _$UserModel {
   const factory UserModel({
     int? id,
     String? username,
-    String? musicStyle,
-    String? favoriteSongName,
-    //PlaylistModel? playlist,
+    @JsonKey(name: 'music_style') String? musicStyle,
+    @JsonKey(name: 'favorite_song_name') String? favoriteSongName,
+    PlaylistModel? playlist,
   }) = _RemoteUserModel;
 
   const UserModel._();

@@ -22,8 +22,10 @@ ArtistModel _$ArtistModelFromJson(Map<String, dynamic> json) {
 mixin _$ArtistModel {
   int get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'music_style')
   String? get musicStyle => throw _privateConstructorUsedError;
   int? get age => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_active')
   int? get isActive => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +41,11 @@ abstract class $ArtistModelCopyWith<$Res> {
       _$ArtistModelCopyWithImpl<$Res, ArtistModel>;
   @useResult
   $Res call(
-      {int id, String? name, String? musicStyle, int? age, int? isActive});
+      {int id,
+      String? name,
+      @JsonKey(name: 'music_style') String? musicStyle,
+      int? age,
+      @JsonKey(name: 'is_active') int? isActive});
 }
 
 /// @nodoc
@@ -95,7 +101,11 @@ abstract class _$$ArtistModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id, String? name, String? musicStyle, int? age, int? isActive});
+      {int id,
+      String? name,
+      @JsonKey(name: 'music_style') String? musicStyle,
+      int? age,
+      @JsonKey(name: 'is_active') int? isActive});
 }
 
 /// @nodoc
@@ -144,7 +154,11 @@ class __$$ArtistModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ArtistModelImpl extends _ArtistModel {
   const _$ArtistModelImpl(
-      {required this.id, this.name, this.musicStyle, this.age, this.isActive})
+      {required this.id,
+      this.name,
+      @JsonKey(name: 'music_style') this.musicStyle,
+      this.age,
+      @JsonKey(name: 'is_active') this.isActive})
       : super._();
 
   factory _$ArtistModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -155,10 +169,12 @@ class _$ArtistModelImpl extends _ArtistModel {
   @override
   final String? name;
   @override
+  @JsonKey(name: 'music_style')
   final String? musicStyle;
   @override
   final int? age;
   @override
+  @JsonKey(name: 'is_active')
   final int? isActive;
 
   @override
@@ -203,9 +219,9 @@ abstract class _ArtistModel extends ArtistModel {
   const factory _ArtistModel(
       {required final int id,
       final String? name,
-      final String? musicStyle,
+      @JsonKey(name: 'music_style') final String? musicStyle,
       final int? age,
-      final int? isActive}) = _$ArtistModelImpl;
+      @JsonKey(name: 'is_active') final int? isActive}) = _$ArtistModelImpl;
   const _ArtistModel._() : super._();
 
   factory _ArtistModel.fromJson(Map<String, dynamic> json) =
@@ -216,10 +232,12 @@ abstract class _ArtistModel extends ArtistModel {
   @override
   String? get name;
   @override
+  @JsonKey(name: 'music_style')
   String? get musicStyle;
   @override
   int? get age;
   @override
+  @JsonKey(name: 'is_active')
   int? get isActive;
   @override
   @JsonKey(ignore: true)

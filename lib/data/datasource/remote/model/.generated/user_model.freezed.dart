@@ -22,8 +22,11 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 mixin _$UserModel {
   int? get id => throw _privateConstructorUsedError;
   String? get username => throw _privateConstructorUsedError;
+  @JsonKey(name: 'music_style')
   String? get musicStyle => throw _privateConstructorUsedError;
+  @JsonKey(name: 'favorite_song_name')
   String? get favoriteSongName => throw _privateConstructorUsedError;
+  PlaylistModel? get playlist => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,8 +42,11 @@ abstract class $UserModelCopyWith<$Res> {
   $Res call(
       {int? id,
       String? username,
-      String? musicStyle,
-      String? favoriteSongName});
+      @JsonKey(name: 'music_style') String? musicStyle,
+      @JsonKey(name: 'favorite_song_name') String? favoriteSongName,
+      PlaylistModel? playlist});
+
+  $PlaylistModelCopyWith<$Res>? get playlist;
 }
 
 /// @nodoc
@@ -60,6 +66,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? username = freezed,
     Object? musicStyle = freezed,
     Object? favoriteSongName = freezed,
+    Object? playlist = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -78,7 +85,23 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.favoriteSongName
           : favoriteSongName // ignore: cast_nullable_to_non_nullable
               as String?,
+      playlist: freezed == playlist
+          ? _value.playlist
+          : playlist // ignore: cast_nullable_to_non_nullable
+              as PlaylistModel?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PlaylistModelCopyWith<$Res>? get playlist {
+    if (_value.playlist == null) {
+      return null;
+    }
+
+    return $PlaylistModelCopyWith<$Res>(_value.playlist!, (value) {
+      return _then(_value.copyWith(playlist: value) as $Val);
+    });
   }
 }
 
@@ -93,8 +116,12 @@ abstract class _$$RemoteUserModelImplCopyWith<$Res>
   $Res call(
       {int? id,
       String? username,
-      String? musicStyle,
-      String? favoriteSongName});
+      @JsonKey(name: 'music_style') String? musicStyle,
+      @JsonKey(name: 'favorite_song_name') String? favoriteSongName,
+      PlaylistModel? playlist});
+
+  @override
+  $PlaylistModelCopyWith<$Res>? get playlist;
 }
 
 /// @nodoc
@@ -112,6 +139,7 @@ class __$$RemoteUserModelImplCopyWithImpl<$Res>
     Object? username = freezed,
     Object? musicStyle = freezed,
     Object? favoriteSongName = freezed,
+    Object? playlist = freezed,
   }) {
     return _then(_$RemoteUserModelImpl(
       id: freezed == id
@@ -130,6 +158,10 @@ class __$$RemoteUserModelImplCopyWithImpl<$Res>
           ? _value.favoriteSongName
           : favoriteSongName // ignore: cast_nullable_to_non_nullable
               as String?,
+      playlist: freezed == playlist
+          ? _value.playlist
+          : playlist // ignore: cast_nullable_to_non_nullable
+              as PlaylistModel?,
     ));
   }
 }
@@ -138,7 +170,11 @@ class __$$RemoteUserModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RemoteUserModelImpl extends _RemoteUserModel {
   const _$RemoteUserModelImpl(
-      {this.id, this.username, this.musicStyle, this.favoriteSongName})
+      {this.id,
+      this.username,
+      @JsonKey(name: 'music_style') this.musicStyle,
+      @JsonKey(name: 'favorite_song_name') this.favoriteSongName,
+      this.playlist})
       : super._();
 
   factory _$RemoteUserModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -149,13 +185,17 @@ class _$RemoteUserModelImpl extends _RemoteUserModel {
   @override
   final String? username;
   @override
+  @JsonKey(name: 'music_style')
   final String? musicStyle;
   @override
+  @JsonKey(name: 'favorite_song_name')
   final String? favoriteSongName;
+  @override
+  final PlaylistModel? playlist;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, username: $username, musicStyle: $musicStyle, favoriteSongName: $favoriteSongName)';
+    return 'UserModel(id: $id, username: $username, musicStyle: $musicStyle, favoriteSongName: $favoriteSongName, playlist: $playlist)';
   }
 
   @override
@@ -169,13 +209,15 @@ class _$RemoteUserModelImpl extends _RemoteUserModel {
             (identical(other.musicStyle, musicStyle) ||
                 other.musicStyle == musicStyle) &&
             (identical(other.favoriteSongName, favoriteSongName) ||
-                other.favoriteSongName == favoriteSongName));
+                other.favoriteSongName == favoriteSongName) &&
+            (identical(other.playlist, playlist) ||
+                other.playlist == playlist));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, username, musicStyle, favoriteSongName);
+  int get hashCode => Object.hash(
+      runtimeType, id, username, musicStyle, favoriteSongName, playlist);
 
   @JsonKey(ignore: true)
   @override
@@ -196,8 +238,9 @@ abstract class _RemoteUserModel extends UserModel {
   const factory _RemoteUserModel(
       {final int? id,
       final String? username,
-      final String? musicStyle,
-      final String? favoriteSongName}) = _$RemoteUserModelImpl;
+      @JsonKey(name: 'music_style') final String? musicStyle,
+      @JsonKey(name: 'favorite_song_name') final String? favoriteSongName,
+      final PlaylistModel? playlist}) = _$RemoteUserModelImpl;
   const _RemoteUserModel._() : super._();
 
   factory _RemoteUserModel.fromJson(Map<String, dynamic> json) =
@@ -208,9 +251,13 @@ abstract class _RemoteUserModel extends UserModel {
   @override
   String? get username;
   @override
+  @JsonKey(name: 'music_style')
   String? get musicStyle;
   @override
+  @JsonKey(name: 'favorite_song_name')
   String? get favoriteSongName;
+  @override
+  PlaylistModel? get playlist;
   @override
   @JsonKey(ignore: true)
   _$$RemoteUserModelImplCopyWith<_$RemoteUserModelImpl> get copyWith =>

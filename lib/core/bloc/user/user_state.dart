@@ -2,21 +2,21 @@ import 'package:dio/dio.dart';
 
 import '../../../domain/entity/user_entity.dart';
 
-abstract class LocalUserState {
+abstract class UserState {
   final UserEntity? user;
   final DioException? exception;
 
-  const LocalUserState({this.user, this.exception});
+  const UserState({this.user, this.exception});
 }
 
-class LocalUserLoading extends LocalUserState {
-  const LocalUserLoading();
+class UserLoading extends UserState {
+  const UserLoading();
 }
 
-class LocalUserDone extends LocalUserState {
-  const LocalUserDone(UserEntity user) : super(user: user);
+class UserDone extends UserState {
+  const UserDone(UserEntity user) : super(user: user);
 }
 
-class LocalUserError extends LocalUserState {
-  const LocalUserError(DioException exception) : super(exception: exception);
+class UserError extends UserState {
+  const UserError(DioException exception) : super(exception: exception);
 }

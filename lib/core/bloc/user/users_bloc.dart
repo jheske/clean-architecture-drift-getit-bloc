@@ -5,14 +5,14 @@ import 'package:clean_architecture_drift_getit_bloc/core/bloc/user/users_state.d
 import '../../../domain/entity/user_entity.dart';
 import '../../../presentation/usecase/get_users_usecase.dart';
 
-class LocalUsersBloc extends Bloc<LocalUsersEvent, LocalUsersState> {
+class UsersBloc extends Bloc<UsersEvent, UsersState> {
   final GetUsersUseCase _getUsersUseCase;
 
-  LocalUsersBloc(this._getUsersUseCase) : super(const LocalUsersLoading()) {
+  UsersBloc(this._getUsersUseCase) : super(const UsersLoading.UsersLoading()) {
     on<GetUsers>(onGetUsers);
   }
 
-  void onGetUsers(GetUsers event, Emitter<LocalUsersState> emit) async {
+  void onGetUsers(GetUsers event, Emitter<UsersState> emit) async {
     List<UserEntity> users = await _getUsersUseCase();
     if (users.isEmpty) {
       users.add(UserEntity(
@@ -31,6 +31,6 @@ class LocalUsersBloc extends Bloc<LocalUsersEvent, LocalUsersState> {
           favoriteSongName: 'Mock song 3',
           musicStyle: 'Mock style 3'));
     }
-    emit(LocalUsersDone(users));
+    emit(UsersDone.UsersDone(users));
   }
 }

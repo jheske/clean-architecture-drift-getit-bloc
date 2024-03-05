@@ -24,7 +24,6 @@ mixin _$PlaylistModel {
   @JsonKey(name: "user_id")
   int get userId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
-  @JsonKey(name: "songs")
   List<int?>? get songs => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,7 +42,7 @@ abstract class $PlaylistModelCopyWith<$Res> {
       {int id,
       @JsonKey(name: "user_id") int userId,
       String? name,
-      @JsonKey(name: "songs") List<int?>? songs});
+      List<int?>? songs});
 }
 
 /// @nodoc
@@ -97,7 +96,7 @@ abstract class _$$PlaylistModelImplCopyWith<$Res>
       {int id,
       @JsonKey(name: "user_id") int userId,
       String? name,
-      @JsonKey(name: "songs") List<int?>? songs});
+      List<int?>? songs});
 }
 
 /// @nodoc
@@ -144,7 +143,7 @@ class _$PlaylistModelImpl extends _PlaylistModel {
       {required this.id,
       @JsonKey(name: "user_id") required this.userId,
       this.name,
-      @JsonKey(name: "songs") final List<int?>? songs})
+      final List<int?>? songs})
       : _songs = songs,
         super._();
 
@@ -160,7 +159,6 @@ class _$PlaylistModelImpl extends _PlaylistModel {
   final String? name;
   final List<int?>? _songs;
   @override
-  @JsonKey(name: "songs")
   List<int?>? get songs {
     final value = _songs;
     if (value == null) return null;
@@ -209,7 +207,7 @@ abstract class _PlaylistModel extends PlaylistModel {
       {required final int id,
       @JsonKey(name: "user_id") required final int userId,
       final String? name,
-      @JsonKey(name: "songs") final List<int?>? songs}) = _$PlaylistModelImpl;
+      final List<int?>? songs}) = _$PlaylistModelImpl;
   const _PlaylistModel._() : super._();
 
   factory _PlaylistModel.fromJson(Map<String, dynamic> json) =
@@ -223,7 +221,6 @@ abstract class _PlaylistModel extends PlaylistModel {
   @override
   String? get name;
   @override
-  @JsonKey(name: "songs")
   List<int?>? get songs;
   @override
   @JsonKey(ignore: true)

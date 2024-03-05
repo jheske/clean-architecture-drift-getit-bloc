@@ -36,10 +36,6 @@ class UsersScreen extends StatefulWidget {
   State createState() => _UsersScreenState(); // Create state for UsersScreen.
 }
 
-Future<List<UserEntity>> getUsers() async {
-  return [];
-}
-
 // State class for UsersScreen.
 class _UsersScreenState extends State<UsersScreen> {
   // Repository instance obtained from the service locator.
@@ -52,13 +48,13 @@ class _UsersScreenState extends State<UsersScreen> {
     // Return Scaffold widget with AppBar and body content.
     return Scaffold(
       appBar: _buildAppBar(),
-      body: BlocBuilder<LocalUsersBloc, LocalUsersState>(
+      body: BlocBuilder<UsersBloc, UsersState>(
         builder: (_, state) {
-          if (state is LocalUsersLoading) {
+          if (state is UsersLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is LocalUsersDone) {
+          } else if (state is UsersDone) {
             return _buildUserList(state.users ?? []);
-          } else if (state is LocalUsersError) {
+          } else if (state is UsersError) {
             return Center(child: Text(state.exception?.message ?? 'An error occurred'));
           } else {
             return const Center(child: CircularProgressIndicator());
@@ -94,8 +90,8 @@ class _UsersScreenState extends State<UsersScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     // Set selected user using Provider.
-                    context.read<LocalUserBloc>().add(
-                          GetUser(id: user.id), // Dispatch LocalUserEvent with user.
+                    context.read<UserBloc>().add(
+                          GetUser(id: user.id), // Dispatch UserEvent with user.
                         );
                     GoRouter.of(context)
                         .push('/user/${user.id}'); // Navigate to user details screen.

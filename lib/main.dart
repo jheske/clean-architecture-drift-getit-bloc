@@ -6,6 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:json_theme/json_theme.dart';
 
+import 'core/bloc/artist/artist_bloc.dart';
+import 'core/bloc/artist/artists_bloc.dart';
+import 'core/bloc/artist/artists_event.dart';
 import 'core/bloc/user/user_bloc.dart';
 import 'core/bloc/user/users_bloc.dart';
 import 'core/bloc/user/users_event.dart';
@@ -45,10 +48,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider<LocalUsersBloc>(
+          BlocProvider<UsersBloc>(
             create: (context) => serviceLocator()..add(const GetUsers()),
           ),
-          BlocProvider<LocalUserBloc>(
+          BlocProvider<UserBloc>(
+            create: (context) => serviceLocator(),
+          ),
+          BlocProvider<ArtistsBloc>(
+            create: (context) => serviceLocator()..add(const GetArtists()),
+          ),
+          BlocProvider<ArtistBloc>(
             create: (context) => serviceLocator(),
           ),
         ],

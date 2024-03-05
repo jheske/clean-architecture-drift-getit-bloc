@@ -29,14 +29,14 @@ class UserScreen extends StatelessWidget {
     // Obtain theme data from context.
     final theme = Theme.of(context);
 
-    return BlocBuilder<LocalUserBloc, LocalUserState>(
+    return BlocBuilder<UserBloc, UserState>(
       builder: (BuildContext context, state) {
-        // Dispatch GetUser event with the provided id when LocalUserBloc is first initialized
-        if (state is LocalUserLoading) {
+        // Dispatch GetUser event with the provided id when UserBloc is first initialized
+        if (state is UserLoading) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is LocalUserDone) {
+        } else if (state is UserDone) {
           return _buildScreen(context, theme, state.user);
-        } else if (state is LocalUserError) {
+        } else if (state is UserError) {
           return const Center(child: Text('Error loading user.'));
         } else {
           return const Center(child: Text('Unknown error.'));

@@ -21,7 +21,7 @@ CREATE TABLE [song] (
     duration INT,
     genre Text,
     album Text,
-    artistId INT NOT NULL REFERENCES artist(id) ON DELETE CASCADE
+    artist_id INT NOT NULL REFERENCES artist(id) ON DELETE CASCADE
 ) as SongTable;
 
 CREATE TABLE [playlist] (
@@ -31,7 +31,7 @@ CREATE TABLE [playlist] (
     CONSTRAINT unique_user_playlist UNIQUE (user_id)
 ) as PlaylistTable;
 
-CREATE TABLE [playlistWithSongs] (
+CREATE TABLE [playlistwithsongs] (
     id INT NOT NULL PRIMARY KEY AUTOINCREMENT,
     song_id INT NOT NULL REFERENCES song(id),
     playlist_id INT NOT NULL REFERENCES playlist(id),
@@ -69,6 +69,13 @@ _getPlaylistByUserId:
     WHERE user_id = :userId
     LIMIT 1;
 
+_getPlaylistWithSongs:
+   SELECT s.*
+   FROM song AS s
+   INNER JOIN playlistwithsongs AS ps ON ps.song_id = s.id
+   INNER JOIN artist AS a ON a.id = s.artist_id
+   WHERE ps.playlist_id = :playlistId;
+
 -- CREATE and UPDATE OPERATIONS
 
 _insertUser:
@@ -80,16 +87,16 @@ _insertArtist:
     VALUES (:id, :name, :age, :music_style, :is_active);
 
 _insertSong:
-    INSERT INTO [song] (id, name, duration, genre, album, artistId)
-    VALUES (:id, :name, :duration, :genre, :album, :artistId);
+    INSERT INTO [song] (id, name, duration, genre, album, artist_id)
+    VALUES (:id, :name, :duration, :genre, :album, :artist_id);
 
 _insertPlaylist:
     INSERT INTO [playlist] (id, name, user_id)
     VALUES (:id, :name, :user_id);
 
 _insertPlaylistWithSongs:
-    INSERT INTO [playlistWithSongs] (song_id, playlist_id)
-    VALUES (:song_id, :playlist_id);
+    INSERT INTO [playlistwithsongs] (song_id, playlist_id)
+    VALUES (:songId, :plaaylist_id);
 
 -- DELETE OPERATIONS
 
