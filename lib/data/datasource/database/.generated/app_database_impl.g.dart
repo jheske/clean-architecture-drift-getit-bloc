@@ -262,7 +262,7 @@ class UserCompanion extends UpdateCompanion<UserTable> {
   }
 }
 
-class Artist extends Table with TableInfo<Artist, ArtistData> {
+class Artist extends Table with TableInfo<Artist, ArtistTable> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -308,7 +308,7 @@ class Artist extends Table with TableInfo<Artist, ArtistData> {
   String get actualTableName => $name;
   static const String $name = 'artist';
   @override
-  VerificationContext validateIntegrity(Insertable<ArtistData> instance,
+  VerificationContext validateIntegrity(Insertable<ArtistTable> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -345,9 +345,9 @@ class Artist extends Table with TableInfo<Artist, ArtistData> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  ArtistData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  ArtistTable map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ArtistData(
+    return ArtistTable(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       name: attachedDatabase.typeMapping
@@ -370,13 +370,13 @@ class Artist extends Table with TableInfo<Artist, ArtistData> {
   bool get dontWriteConstraints => true;
 }
 
-class ArtistData extends DataClass implements Insertable<ArtistData> {
+class ArtistTable extends DataClass implements Insertable<ArtistTable> {
   final int id;
   final String name;
   final int age;
   final String musicStyle;
   final int? isActive;
-  const ArtistData(
+  const ArtistTable(
       {required this.id,
       required this.name,
       required this.age,
@@ -407,10 +407,10 @@ class ArtistData extends DataClass implements Insertable<ArtistData> {
     );
   }
 
-  factory ArtistData.fromJson(Map<String, dynamic> json,
+  factory ArtistTable.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ArtistData(
+    return ArtistTable(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       age: serializer.fromJson<int>(json['age']),
@@ -430,13 +430,13 @@ class ArtistData extends DataClass implements Insertable<ArtistData> {
     };
   }
 
-  ArtistData copyWith(
+  ArtistTable copyWith(
           {int? id,
           String? name,
           int? age,
           String? musicStyle,
           Value<int?> isActive = const Value.absent()}) =>
-      ArtistData(
+      ArtistTable(
         id: id ?? this.id,
         name: name ?? this.name,
         age: age ?? this.age,
@@ -445,7 +445,7 @@ class ArtistData extends DataClass implements Insertable<ArtistData> {
       );
   @override
   String toString() {
-    return (StringBuffer('ArtistData(')
+    return (StringBuffer('ArtistTable(')
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('age: $age, ')
@@ -460,7 +460,7 @@ class ArtistData extends DataClass implements Insertable<ArtistData> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is ArtistData &&
+      (other is ArtistTable &&
           other.id == this.id &&
           other.name == this.name &&
           other.age == this.age &&
@@ -468,7 +468,7 @@ class ArtistData extends DataClass implements Insertable<ArtistData> {
           other.isActive == this.isActive);
 }
 
-class ArtistCompanion extends UpdateCompanion<ArtistData> {
+class ArtistCompanion extends UpdateCompanion<ArtistTable> {
   final Value<int> id;
   final Value<String> name;
   final Value<int> age;
@@ -490,7 +490,7 @@ class ArtistCompanion extends UpdateCompanion<ArtistData> {
   })  : name = Value(name),
         age = Value(age),
         musicStyle = Value(musicStyle);
-  static Insertable<ArtistData> custom({
+  static Insertable<ArtistTable> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<int>? age,
@@ -1340,13 +1340,13 @@ abstract class _$AppDatabaseImpl extends GeneratedDatabase {
     }).asyncMap(user.mapFromRow);
   }
 
-  Selectable<ArtistData> _getArtists() {
+  Selectable<ArtistTable> _getArtists() {
     return customSelect('SELECT * FROM artist', variables: [], readsFrom: {
       artist,
     }).asyncMap(artist.mapFromRow);
   }
 
-  Selectable<ArtistData> _getArtistById(int id) {
+  Selectable<ArtistTable> _getArtistById(int id) {
     return customSelect('SELECT * FROM artist WHERE id = ?1 LIMIT 1',
         variables: [
           Variable<int>(id)
@@ -1368,6 +1368,16 @@ abstract class _$AppDatabaseImpl extends GeneratedDatabase {
     ], readsFrom: {
       song,
     }).asyncMap(song.mapFromRow);
+  }
+
+  Selectable<PlaylistTable> _getPlaylistByUserId(int userId) {
+    return customSelect('SELECT * FROM playlist WHERE user_id = ?1 LIMIT 1',
+        variables: [
+          Variable<int>(userId)
+        ],
+        readsFrom: {
+          playlist,
+        }).asyncMap(playlist.mapFromRow);
   }
 
   Future<int> _insertUser(
@@ -1412,6 +1422,26 @@ abstract class _$AppDatabaseImpl extends GeneratedDatabase {
         Variable<int>(artistId)
       ],
       updates: {song},
+    );
+  }
+
+  Future<int> _insertPlaylist(int id, String name, int userId) {
+    return customInsert(
+      'INSERT INTO playlist (id, name, user_id) VALUES (?1, ?2, ?3)',
+      variables: [
+        Variable<int>(id),
+        Variable<String>(name),
+        Variable<int>(userId)
+      ],
+      updates: {playlist},
+    );
+  }
+
+  Future<int> _insertPlaylistWithSongs(int songId, int playlistId) {
+    return customInsert(
+      'INSERT INTO playlistWithSongs (song_id, playlist_id) VALUES (?1, ?2)',
+      variables: [Variable<int>(songId), Variable<int>(playlistId)],
+      updates: {playlistWithSongs},
     );
   }
 

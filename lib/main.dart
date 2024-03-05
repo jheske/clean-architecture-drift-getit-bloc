@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:json_theme/json_theme.dart';
 
 import 'core/bloc/user/user_bloc.dart';
-import 'core/bloc/user/user_event.dart';
 import 'core/bloc/user/users_bloc.dart';
 import 'core/bloc/user/users_event.dart';
 import 'core/injection_container.dart';
@@ -50,7 +49,7 @@ class MyApp extends StatelessWidget {
             create: (context) => serviceLocator()..add(const GetUsers()),
           ),
           BlocProvider<LocalUserBloc>(
-            create: (context) => serviceLocator()..add(const GetUser()),
+            create: (context) => serviceLocator(),
           ),
         ],
         child: MaterialApp.router(

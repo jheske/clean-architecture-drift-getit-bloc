@@ -1,12 +1,16 @@
 import 'dart:io';
 
+import 'package:clean_architecture_drift_getit_bloc/data/datasource/remote/model/model_extensions.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
 
-import '../entity/model_typedefs.dart';
+import '../remote/model/artist_model.dart';
+import '../remote/model/song_model.dart';
+import '../remote/model/user_model.dart';
 import 'app_database.dart';
 
 part '.generated/app_database_impl.g.dart';
@@ -22,16 +26,15 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
 
   @override
   Future<void> clearDatabase() async {
+    // TODO loop thru database.tables
+    if (kDebugMode) {
+      print('[clearDatabase]: deleting all tables');
+    }
     await delete(artist).go();
-
-    // await transaction(() async {
-    //   // Deleting tables in reverse topological order to avoid foreign-key conflicts
-    //   final tables = allTables.toList().reversed;
-    //
-    //   for (final table in allTables) {
-    //     await delete(table).go();
-    //   }
-    // });
+    await delete(song).go();
+    await delete(user).go();
+    await delete(playlist).go();
+    await delete(playlistWithSongs).go();
   }
 
   ///
@@ -42,19 +45,19 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
   Stream<List<UserTable>> watchUsers() => _getUsers().watch();
 
   @override
-  Future<List<UserModel>> getUsers() => _getUsers().get();
+  Future<List<UserTable>> getUsers() => _getUsers().get();
 
   @override
   Future<UserTable?> getUser(int id) => _getUserById(id).getSingleOrNull();
 
   @override
-  Stream<List<ArtistData>> watchArtists() => _getArtists().watch();
+  Stream<List<ArtistTable>> watchArtists() => _getArtists().watch();
 
   @override
-  Future<List<ArtistData>> getArtists() => _getArtists().get();
+  Future<List<ArtistTable>> getArtists() => _getArtists().get();
 
   @override
-  Future<ArtistData?> getArtist(int id) => _getArtistById(id).getSingleOrNull();
+  Future<ArtistTable?> getArtist(int id) => _getArtistById(id).getSingleOrNull();
 
   @override
   Stream<List<SongTable>> watchSongs() => _getSongs().watch();
@@ -66,14 +69,13 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
   Future<SongTable?> getSong(int id) => _getSongById(id).getSingleOrNull();
 
   @override
-  Future<ArtistModel> insertArtist(ArtistModel model) async {
-    final companion = ArtistCompanion.insert(
-      id: Value(model.id),
-      name: model.name,
-      age: model.age,
-      musicStyle: model.musicStyle,
-      isActive: Value(model.isActive),
-    );
+  Future<PlaylistTable?> getPlaylistByUserId(int id) {
+    return _getPlaylistByUserId(id).getSingleOrNull();
+  }
+
+  @override
+  Future<int> insertArtist(ArtistModel model) async {
+    final companion = await model.toCompanion();
     final id = await _insertArtist(
       companion.id.value,
       companion.name.value,
@@ -81,7 +83,7 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
       companion.musicStyle.value,
       companion.isActive.value,
     );
-    return _getArtistById(id).getSingle();
+    return id;
   }
 
   @override
@@ -92,15 +94,9 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
   }
 
   @override
-  Future<SongModel> insertSong(SongModel model) async {
-    final companion = SongCompanion.insert(
-      id: Value(model.id),
-      name: model.name,
-      duration: Value(model.duration),
-      genre: Value(model.genre),
-      album: Value(model.album),
-      artistId: model.artistId,
-    );
+  Future<int> insertSong(SongModel model) async {
+    final companion = await model.toCompanion();
+
     final id = await _insertSong(
       companion.id.value,
       companion.name.value,
@@ -109,7 +105,11 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
       companion.album.value,
       companion.artistId.value,
     );
-    return _getSongById(id).getSingle();
+    // final song = await _getSongById(id).getSingleOrNull();
+    // if (kDebugMode) {
+    //   print('[insertSong]: $song');
+    // }
+    return id;
   }
 
   @override
@@ -120,8 +120,23 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
   }
 
   @override
-  Future<UserModel> insertUser(UserTable model) async {
-    return UserModel(id: -1, username: '', musicStyle: '', favoriteSongName: '');
+  Future<int> insertUser(UserModel model) async {
+    final companion = model.toCompanion();
+    final id = await _insertUser(
+      companion.id.value,
+      companion.username.value,
+      companion.musicStyle.value,
+      companion.favoriteSongName.value,
+    );
+    // if (model.playlist != null) {
+    //   await playlist!.();
+    // }
+
+    final user = await _getUserById(id).getSingleOrNull();
+    if (kDebugMode) {
+      print('[insertUser]: $user');
+    }
+    return id;
   }
 
   @override
@@ -130,6 +145,34 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
       await insertUser(model);
     }
   }
+
+  // Future<void> insertPlaylistWithSongs(PlaylistModel model) async {
+  //   final companion = model.toCompanion();
+  //   await _insertPlaylist(
+  //     companion.id.value,
+  //     companion.name.value,
+  //     companion.description.value,
+  //     companion.userId.value,
+  //   );
+  //   for (final song in model.songs) {
+  //     await insertSong(song);
+  //   }
+  // }
+
+  // Future<void> insertPlaylist(PlaylistModel model) async {
+  //   final companion = PlaylistCompanion.insert(
+  //     id: Value(model.id),
+  //     name: model.name,
+  //     description: model.description,
+  //     userId: model.userId,
+  //   );
+  //   await _insertPlaylist(
+  //     companion.id.value,
+  //     companion.name.value,
+  //     companion.description.value,
+  //     companion.userId.value,
+  //   );
+  // }
 }
 
 // Function to open the database connection.

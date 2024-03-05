@@ -13,7 +13,7 @@
 /// You should have received a copy of the Apache License, Version 2.0
 /// along with flutter-clean-architecture-drift-retrofit. If not, see <https:///www.apache.org/licenses/LICENSE-2.0>.
 
-import '../../data/datasource/entity/model_typedefs.dart';
+import '../../data/datasource/remote/model/song_model.dart';
 import 'artist_entity.dart';
 
 class SongEntity {

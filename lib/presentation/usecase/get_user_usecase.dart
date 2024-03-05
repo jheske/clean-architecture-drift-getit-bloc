@@ -10,6 +10,7 @@ class GetUserUseCase implements UseCase<UserEntity?, int> {
 
   @override
   Future<UserEntity?> call({int? params}) async {
-    return _repository.getUser(params!);
+    final user = _repository.getUser(params!);
+    return user;
   }
 }

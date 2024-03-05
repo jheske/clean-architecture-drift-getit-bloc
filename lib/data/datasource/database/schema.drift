@@ -13,7 +13,7 @@ CREATE TABLE [artist] (
     age INT NOT NULL,
     music_style TEXT NOT NULL,
     is_active INTEGER DEFAULT 0
-);
+) as ArtistTable;
 
 CREATE TABLE [song] (
     id INT NOT NULL PRIMARY KEY,
@@ -64,6 +64,11 @@ _getSongById:
     WHERE id = :id
     LIMIT 1;
 
+_getPlaylistByUserId:
+    SELECT * FROM [playlist]
+    WHERE user_id = :userId
+    LIMIT 1;
+
 -- CREATE and UPDATE OPERATIONS
 
 _insertUser:
@@ -77,6 +82,14 @@ _insertArtist:
 _insertSong:
     INSERT INTO [song] (id, name, duration, genre, album, artistId)
     VALUES (:id, :name, :duration, :genre, :album, :artistId);
+
+_insertPlaylist:
+    INSERT INTO [playlist] (id, name, user_id)
+    VALUES (:id, :name, :user_id);
+
+_insertPlaylistWithSongs:
+    INSERT INTO [playlistWithSongs] (song_id, playlist_id)
+    VALUES (:song_id, :playlist_id);
 
 -- DELETE OPERATIONS
 

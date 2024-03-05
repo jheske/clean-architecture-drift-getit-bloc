@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:clean_architecture_drift_getit_bloc/data/datasource/database/table_extensions.dart';
 import 'package:clean_architecture_drift_getit_bloc/data/repository/repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -18,9 +19,17 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
 
   @override
   Future<void> saveToDatabase(MusicModel musicModel) async {
-    _db.insertArtistList(musicModel.artists);
-    _db.insertSongList(musicModel.songs);
+    print('[saveToDatabase]');
 
+    await _db.insertArtistList(musicModel.artists);
+    await _db.insertSongList(musicModel.songs);
+    await _db.insertUserList(musicModel.users);
+
+    final firstUser = await getUser(12345);
+
+    if (kDebugMode) {
+      print('[saveToDatabase getUsers] first user name: ${firstUser?.username ?? 'none'}');
+    }
     final firstArtist = await _db.getArtist(1);
     final firstSong = await _db.getSong(1);
 
@@ -30,29 +39,30 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
     }
   }
 
-  ///
-  /// build_runner generates the implementation of '_' CRUD methods
-  /// based on the drift schema in the `tables.drift` file.
-  ///
   @override
+  // TODO the database should support returning user with playlist.
+  /// This function returns users directly from the User table, without playlist.
+  /// Use this on the main Users screen to list names of users.
   Future<List<UserEntity>> getUsers() async {
-    List<UserEntity> users = [];
-    final userModels = await _db.getUsers();
+    PlaylistEntity playlistEntity = const PlaylistEntity();
+    List<UserEntity> entityList = [];
+    final userTables = await _db.getUsers();
 
-    for (var model in userModels) {
-      final entity = await UserEntity.toEntity(model, PlaylistEntity());
-      if (entity != null) {
-        users.add(entity);
+    await Future.forEach(userTables, (userTable) async {
+      final playlistTable = await _db.getPlaylistByUserId(userTable.id);
+      if (playlistTable != null) {
+        playlistEntity = playlistTable.toEntity();
       }
-    }
-    return users;
+      entityList.add(userTable.toEntity(playlistEntity));
+    });
+    return entityList;
   }
 
   @override
   Future<UserEntity?> getUser(int id) async {
-    final user = await _db.getUser(id);
-    if (user != null) {
-      return await UserEntity.toEntity(user, PlaylistEntity());
+    final userTable = await _db.getUser(id);
+    if (userTable != null) {
+      return userTable.toEntity(const PlaylistEntity());
     } else {
       return null;
     }
@@ -72,9 +82,4 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
       return MusicModel.init();
     }
   }
-
-  // @override
-  // Future<dynamic> fetchMusic() {
-  //   return _apiService.fetchMusic();
-  // }
 }

@@ -14,7 +14,7 @@
 /// along with flutter-clean-architecture-drift-retrofit. If not, see <https:///www.apache.org/licenses/LICENSE-2.0>.
 import 'package:clean_architecture_drift_getit_bloc/domain/entity/song_entity.dart';
 
-import '../../data/datasource/entity/model_typedefs.dart';
+import '../../data/datasource/remote/model/artist_model.dart';
 
 class ArtistEntity {
   int id;

@@ -1,23 +1,26 @@
-import '../entity/model_typedefs.dart';
+import '../remote/model/artist_model.dart';
+import '../remote/model/song_model.dart';
+import '../remote/model/user_model.dart';
 import 'app_database_impl.dart';
 
 abstract class AppDatabase {
   Future<void> clearDatabase();
   // READ - SELECT Methods
-  Stream<List<ArtistData>> watchArtists();
-  Future<List<ArtistData>> getArtists();
-  Future<ArtistData?> getArtist(int id);
+  Stream<List<ArtistTable>> watchArtists();
+  Future<List<ArtistTable>> getArtists();
+  Future<ArtistTable?> getArtist(int id);
   Stream<List<UserTable>> watchUsers();
-  Future<List<UserModel>> getUsers();
-  Future<UserModel?> getUser(int id);
+  Future<List<UserTable>> getUsers();
+  Future<UserTable?> getUser(int id);
   Stream<List<SongTable>> watchSongs();
   Future<List<SongTable>> getSongs();
   Future<SongTable?> getSong(int id);
+  Future<PlaylistTable?> getPlaylistByUserId(int id);
   // CREATE/INSERT and UPDATE Methods
-  Future<ArtistModel> insertArtist(ArtistModel model);
+  Future<int> insertArtist(ArtistModel model);
   Future<void> insertArtistList(List<ArtistModel> models);
-  Future<SongModel> insertSong(SongModel model);
+  Future<int> insertSong(SongModel model);
   Future<void> insertSongList(List<SongModel> models);
-  Future<UserModel> insertUser(UserModel model);
+  Future<int> insertUser(UserModel model);
   Future<void> insertUserList(List<UserModel> models);
 }

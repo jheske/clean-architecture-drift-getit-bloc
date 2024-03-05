@@ -17,6 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/bloc/user/user_bloc.dart';
+import '../../core/bloc/user/user_event.dart';
 import '../../core/bloc/user/users_bloc.dart';
 import '../../core/bloc/user/users_state.dart';
 import '../../core/injection_container.dart';
@@ -92,6 +94,9 @@ class _UsersScreenState extends State<UsersScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     // Set selected user using Provider.
+                    context.read<LocalUserBloc>().add(
+                          GetUser(id: user.id), // Dispatch LocalUserEvent with user.
+                        );
                     GoRouter.of(context)
                         .push('/user/${user.id}'); // Navigate to user details screen.
                   },

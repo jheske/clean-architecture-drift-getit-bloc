@@ -14,15 +14,20 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+MusicModel _$MusicModelFromJson(Map<String, dynamic> json) {
+  return _MusicModel.fromJson(json);
+}
+
 /// @nodoc
 mixin _$MusicModel {
   @JsonKey(name: 'Users')
   List<UserModel> get users => throw _privateConstructorUsedError;
-  @JsonKey(name: 'Artists')
-  List<ArtistModel> get artists => throw _privateConstructorUsedError;
   @JsonKey(name: 'Songs')
   List<SongModel> get songs => throw _privateConstructorUsedError;
+  @JsonKey(name: 'Artists')
+  List<ArtistModel> get artists => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $MusicModelCopyWith<MusicModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -36,8 +41,8 @@ abstract class $MusicModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'Users') List<UserModel> users,
-      @JsonKey(name: 'Artists') List<ArtistModel> artists,
-      @JsonKey(name: 'Songs') List<SongModel> songs});
+      @JsonKey(name: 'Songs') List<SongModel> songs,
+      @JsonKey(name: 'Artists') List<ArtistModel> artists});
 }
 
 /// @nodoc
@@ -54,22 +59,22 @@ class _$MusicModelCopyWithImpl<$Res, $Val extends MusicModel>
   @override
   $Res call({
     Object? users = null,
-    Object? artists = null,
     Object? songs = null,
+    Object? artists = null,
   }) {
     return _then(_value.copyWith(
       users: null == users
           ? _value.users
           : users // ignore: cast_nullable_to_non_nullable
               as List<UserModel>,
-      artists: null == artists
-          ? _value.artists
-          : artists // ignore: cast_nullable_to_non_nullable
-              as List<ArtistModel>,
       songs: null == songs
           ? _value.songs
           : songs // ignore: cast_nullable_to_non_nullable
               as List<SongModel>,
+      artists: null == artists
+          ? _value.artists
+          : artists // ignore: cast_nullable_to_non_nullable
+              as List<ArtistModel>,
     ) as $Val);
   }
 }
@@ -84,8 +89,8 @@ abstract class _$$MusicModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'Users') List<UserModel> users,
-      @JsonKey(name: 'Artists') List<ArtistModel> artists,
-      @JsonKey(name: 'Songs') List<SongModel> songs});
+      @JsonKey(name: 'Songs') List<SongModel> songs,
+      @JsonKey(name: 'Artists') List<ArtistModel> artists});
 }
 
 /// @nodoc
@@ -100,37 +105,40 @@ class __$$MusicModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? users = null,
-    Object? artists = null,
     Object? songs = null,
+    Object? artists = null,
   }) {
     return _then(_$MusicModelImpl(
       users: null == users
           ? _value._users
           : users // ignore: cast_nullable_to_non_nullable
               as List<UserModel>,
-      artists: null == artists
-          ? _value._artists
-          : artists // ignore: cast_nullable_to_non_nullable
-              as List<ArtistModel>,
       songs: null == songs
           ? _value._songs
           : songs // ignore: cast_nullable_to_non_nullable
               as List<SongModel>,
+      artists: null == artists
+          ? _value._artists
+          : artists // ignore: cast_nullable_to_non_nullable
+              as List<ArtistModel>,
     ));
   }
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$MusicModelImpl extends _MusicModel {
   const _$MusicModelImpl(
       {@JsonKey(name: 'Users') required final List<UserModel> users,
-      @JsonKey(name: 'Artists') required final List<ArtistModel> artists,
-      @JsonKey(name: 'Songs') required final List<SongModel> songs})
+      @JsonKey(name: 'Songs') required final List<SongModel> songs,
+      @JsonKey(name: 'Artists') required final List<ArtistModel> artists})
       : _users = users,
-        _artists = artists,
         _songs = songs,
+        _artists = artists,
         super._();
+
+  factory _$MusicModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MusicModelImplFromJson(json);
 
   final List<UserModel> _users;
   @override
@@ -139,15 +147,6 @@ class _$MusicModelImpl extends _MusicModel {
     if (_users is EqualUnmodifiableListView) return _users;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_users);
-  }
-
-  final List<ArtistModel> _artists;
-  @override
-  @JsonKey(name: 'Artists')
-  List<ArtistModel> get artists {
-    if (_artists is EqualUnmodifiableListView) return _artists;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_artists);
   }
 
   final List<SongModel> _songs;
@@ -159,9 +158,18 @@ class _$MusicModelImpl extends _MusicModel {
     return EqualUnmodifiableListView(_songs);
   }
 
+  final List<ArtistModel> _artists;
+  @override
+  @JsonKey(name: 'Artists')
+  List<ArtistModel> get artists {
+    if (_artists is EqualUnmodifiableListView) return _artists;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_artists);
+  }
+
   @override
   String toString() {
-    return 'MusicModel(users: $users, artists: $artists, songs: $songs)';
+    return 'MusicModel(users: $users, songs: $songs, artists: $artists)';
   }
 
   @override
@@ -170,41 +178,52 @@ class _$MusicModelImpl extends _MusicModel {
         (other.runtimeType == runtimeType &&
             other is _$MusicModelImpl &&
             const DeepCollectionEquality().equals(other._users, _users) &&
-            const DeepCollectionEquality().equals(other._artists, _artists) &&
-            const DeepCollectionEquality().equals(other._songs, _songs));
+            const DeepCollectionEquality().equals(other._songs, _songs) &&
+            const DeepCollectionEquality().equals(other._artists, _artists));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_users),
-      const DeepCollectionEquality().hash(_artists),
-      const DeepCollectionEquality().hash(_songs));
+      const DeepCollectionEquality().hash(_songs),
+      const DeepCollectionEquality().hash(_artists));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$MusicModelImplCopyWith<_$MusicModelImpl> get copyWith =>
       __$$MusicModelImplCopyWithImpl<_$MusicModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$MusicModelImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _MusicModel extends MusicModel {
   const factory _MusicModel(
           {@JsonKey(name: 'Users') required final List<UserModel> users,
-          @JsonKey(name: 'Artists') required final List<ArtistModel> artists,
-          @JsonKey(name: 'Songs') required final List<SongModel> songs}) =
+          @JsonKey(name: 'Songs') required final List<SongModel> songs,
+          @JsonKey(name: 'Artists') required final List<ArtistModel> artists}) =
       _$MusicModelImpl;
   const _MusicModel._() : super._();
+
+  factory _MusicModel.fromJson(Map<String, dynamic> json) =
+      _$MusicModelImpl.fromJson;
 
   @override
   @JsonKey(name: 'Users')
   List<UserModel> get users;
   @override
-  @JsonKey(name: 'Artists')
-  List<ArtistModel> get artists;
-  @override
   @JsonKey(name: 'Songs')
   List<SongModel> get songs;
+  @override
+  @JsonKey(name: 'Artists')
+  List<ArtistModel> get artists;
   @override
   @JsonKey(ignore: true)
   _$$MusicModelImplCopyWith<_$MusicModelImpl> get copyWith =>

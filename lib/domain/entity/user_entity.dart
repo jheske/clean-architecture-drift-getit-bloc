@@ -15,7 +15,7 @@
 
 import 'package:clean_architecture_drift_getit_bloc/domain/entity/playlist_entity.dart';
 
-import '../../data/datasource/entity/model_typedefs.dart';
+import '../../data/datasource/remote/model/user_model.dart';
 
 class UserEntity {
   int id;
@@ -62,8 +62,8 @@ class UserEntity {
   ) async {
     if (userModel != null) {
       return UserEntity(
-        id: userModel.id,
-        username: userModel.username,
+        id: userModel.id ?? -1,
+        username: userModel.username ?? '',
         musicStyle: userModel.musicStyle,
         favoriteSongName: userModel.favoriteSongName,
         playlist: playlist,

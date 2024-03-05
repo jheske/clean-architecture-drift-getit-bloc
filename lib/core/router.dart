@@ -1,8 +1,10 @@
 // Define the application router using GoRouter.
 import 'package:clean_architecture_drift_getit_bloc/presentation/screens/home_screen.dart';
-import 'package:clean_architecture_drift_getit_bloc/presentation/screens/user_screen.dart';
 import 'package:clean_architecture_drift_getit_bloc/presentation/screens/users_screen.dart';
 import 'package:go_router/go_router.dart';
+
+import '../presentation/screens/database_viewer_screen.dart';
+import '../presentation/screens/user_screen.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/', // Set the initial location of the router.
@@ -23,8 +25,20 @@ final appRouter = GoRouter(
     GoRoute(
       name: 'user',
       path: '/user/:id',
-      builder: (context, GoRouterState state) {
-        return const UserScreen(); // Build the UserScreen when this route is matched.
+      builder: (context, state) {
+        return UserScreen(
+          id: state.pathParameters['id'],
+        );
+      },
+    ),
+    // Route for the database view screen.
+    GoRoute(
+      name: 'database-view',
+      path: '/database-view',
+      builder: (context, state) {
+        // Implement the screen for viewing the database here.
+        // You can use the DatabaseViewer widget or any custom implementation.
+        return DatabaseViewsScreen(); // Build the DatabaseViewsScreen when this route is matched.
       },
     ),
   ],

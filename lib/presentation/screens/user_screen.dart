@@ -20,33 +20,23 @@ import '../../core/bloc/user/user_bloc.dart';
 import '../../core/bloc/user/user_state.dart';
 import '../../domain/entity/user_entity.dart';
 
-// This class represents the UserScreen, which is a StatelessWidget used to display
-// information about a specific user. It contains a Scaffold with an AppBar and body
-// content to show details about the user, including their ID, music style, favorite
-// song, and playlist.
-
 class UserScreen extends StatelessWidget {
-  final int? id; // User ID.
+  final String? id; // User ID.
   const UserScreen({super.key, this.id}); // Constructor for UserScreen.
 
-  // Build method to construct the UI for UserScreen.
   @override
   Widget build(BuildContext context) {
     // Obtain theme data from context.
     final theme = Theme.of(context);
 
-    // Return Scaffold widget with AppBar and body content.
     return BlocBuilder<LocalUserBloc, LocalUserState>(
       builder: (BuildContext context, state) {
-        // BlocBuilder to build UI based on state.
+        // Dispatch GetUser event with the provided id when LocalUserBloc is first initialized
         if (state is LocalUserLoading) {
-          // If state is UserLoading, display a loading indicator.
           return const Center(child: CircularProgressIndicator());
         } else if (state is LocalUserDone) {
-          // If state is UserDone, display user details.
           return _buildScreen(context, theme, state.user);
         } else if (state is LocalUserError) {
-          // If state is UserError, display an error message.
           return const Center(child: Text('Error loading user.'));
         } else {
           return const Center(child: Text('Unknown error.'));
