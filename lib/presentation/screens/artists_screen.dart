@@ -15,8 +15,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
+import '../../core/bloc/artist/artist_bloc.dart';
+import '../../core/bloc/artist/artist_event.dart';
 import '../../core/bloc/artist/artists_bloc.dart';
 import '../../core/bloc/artist/artists_state.dart';
 import '../../domain/entity/artist_entity.dart';
@@ -76,8 +77,10 @@ class _ArtistsScreenState extends State<ArtistsScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 64, vertical: 8.0),
           child: ElevatedButton(
             onPressed: () {
-              Provider.of<ArtistEntity>(context, listen: false)
-                  .setArtist(artist); // Set selected artist using Provider.
+              // Set selected user using Provider.
+              context.read<ArtistBloc>().add(
+                    GetArtist(id: artist.id), // Dispatch UserEvent with user.
+                  );
               GoRouter.of(context).push('/artist'); // Navigate to artist details screen.
             },
             child: Text(artist.name ?? ''), // Display artist name on button.

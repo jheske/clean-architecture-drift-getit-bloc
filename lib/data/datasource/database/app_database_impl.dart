@@ -76,8 +76,14 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
   }
 
   @override
-  Future<List<SongTable>> getPlaylistWithSongs(int id) async {
-    final songTable = await _getPlaylistWithSongs(id).get();
+  Future<List<SongTable>> getSongsInPlaylist(int playlistId) async {
+    final songTable = await _getSongsInPlaylist(playlistId).get();
+    return songTable;
+  }
+
+  @override
+  Future<List<SongTable>> getSongsByArtist(int artistId) async {
+    final songTable = await _getSongsByArtist(artistId).get();
     return songTable;
   }
 

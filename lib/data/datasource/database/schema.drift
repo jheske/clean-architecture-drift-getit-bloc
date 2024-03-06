@@ -69,12 +69,18 @@ _getPlaylistByUserId:
     WHERE user_id = :userId
     LIMIT 1;
 
-_getPlaylistWithSongs:
+_getSongsInPlaylist:
    SELECT s.*
    FROM song AS s
    INNER JOIN playlistwithsongs AS ps ON ps.song_id = s.id
    INNER JOIN artist AS a ON a.id = s.artist_id
    WHERE ps.playlist_id = :playlistId;
+
+_getSongsByArtist:
+   SELECT s.*
+   FROM song AS s
+   INNER JOIN artist AS a ON a.id = s.artist_id
+   WHERE a.id = :artistId;
 
 -- CREATE and UPDATE OPERATIONS
 

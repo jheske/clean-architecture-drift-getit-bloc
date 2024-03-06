@@ -21,8 +21,7 @@ import '../../core/bloc/user/user_state.dart';
 import '../../domain/entity/user_entity.dart';
 
 class UserScreen extends StatelessWidget {
-  final String? id; // User ID.
-  const UserScreen({super.key, this.id}); // Constructor for UserScreen.
+  const UserScreen({super.key}); // Constructor for UserScreen.
 
   @override
   Widget build(BuildContext context) {

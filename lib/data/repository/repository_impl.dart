@@ -65,7 +65,7 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
 
     if (userTable != null) {
       final PlaylistTable? playlistTable = await _db.getPlaylistByUserId(id);
-      final playlistWithSongs = await _db.getPlaylistWithSongs(playlistTable!.id);
+      final playlistWithSongs = await _db.getSongsInPlaylist(playlistTable!.id);
       for (var song in playlistWithSongs) {
         songEntities.add(song.toEntity());
       }
@@ -81,7 +81,18 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   @override
   Future<ArtistEntity?> getArtist(int id) async {
     final artistTable = await _db.getArtist(id);
-    return artistTable?.toEntity();
+    if (artistTable == null) {
+      return null;
+    }
+    final List<SongEntity> songEntities = [];
+
+    final songsByArtist = await _db.getSongsByArtist(id);
+    for (var song in songsByArtist) {
+      songEntities.add(song.toEntity());
+    }
+
+    final entity = artistTable.toEntity(songEntities);
+    return entity;
   }
 
   @override
@@ -90,7 +101,8 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
 
     final artistTables = await _db.getArtists();
     for (var artistTable in artistTables) {
-      entityList.add(artistTable.toEntity());
+      // This query doesn't include songs
+      entityList.add(artistTable.toEntity([]));
     }
     return entityList;
   }

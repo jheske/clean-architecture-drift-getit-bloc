@@ -3,6 +3,7 @@ import 'package:clean_architecture_drift_getit_bloc/presentation/screens/home_sc
 import 'package:clean_architecture_drift_getit_bloc/presentation/screens/users_screen.dart';
 import 'package:go_router/go_router.dart';
 
+import '../presentation/screens/artist_screen.dart';
 import '../presentation/screens/artists_screen.dart';
 import '../presentation/screens/database_viewer_screen.dart';
 import '../presentation/screens/user_screen.dart';
@@ -25,11 +26,9 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       name: 'user',
-      path: '/user/:id',
+      path: '/user',
       builder: (context, state) {
-        return UserScreen(
-          id: state.pathParameters['id'],
-        );
+        return const UserScreen();
       },
     ),
     // Route for the users screen.
@@ -38,6 +37,13 @@ final appRouter = GoRouter(
       path: '/artists',
       builder: (context, state) =>
           const ArtistsScreen(), // Build the UsersScreen when this route is matched.
+    ),
+    GoRoute(
+      name: 'artist',
+      path: '/artist',
+      builder: (context, state) {
+        return const ArtistScreen();
+      },
     ),
     // Route for the database view screen.
     GoRoute(

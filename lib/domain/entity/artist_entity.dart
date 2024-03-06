@@ -14,13 +14,12 @@
 /// along with flutter-clean-architecture-drift-retrofit. If not, see <https:///www.apache.org/licenses/LICENSE-2.0>.
 import 'package:clean_architecture_drift_getit_bloc/domain/entity/song_entity.dart';
 
-import '../../data/datasource/remote/model/artist_model.dart';
-
 class ArtistEntity {
   int id;
   String? name = '';
   String? musicStyle = '';
   int? age = 0;
+  bool? isActive = false;
   List<SongEntity> songs = [];
 
   ArtistEntity({
@@ -28,6 +27,7 @@ class ArtistEntity {
     this.name,
     this.musicStyle,
     this.age,
+    this.isActive,
     this.songs = const [],
   });
 
@@ -38,22 +38,4 @@ class ArtistEntity {
     age = artist.age;
     songs = artist.songs;
   }
-
-  factory ArtistEntity.fromModel(ArtistModel model) {
-    return ArtistEntity(
-      id: model.id,
-      name: model.name,
-      musicStyle: model.musicStyle,
-      age: model.age,
-    );
-  }
-
-  // Future<ArtistModel> toModel() async {
-  //   return ArtistModel(
-  //     id: id,
-  //     name: name,
-  //     musicStyle: musicStyle,
-  //     age: age,
-  //   );
-  // }
 }

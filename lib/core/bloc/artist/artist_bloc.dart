@@ -13,10 +13,10 @@ class ArtistBloc extends Bloc<ArtistEvent, ArtistState> {
   }
 
   void onGetArtist(GetArtist getArtist, Emitter<ArtistState> emit) async {
-    final user = await _getArtistUseCase(params: getArtist.id);
+    final artist = await _getArtistUseCase(params: getArtist.id);
 
-    if (user != null) {
-      emit(ArtistDone(user));
+    if (artist != null) {
+      emit(ArtistDone(artist));
     } else {
       emit(
         ArtistDone(

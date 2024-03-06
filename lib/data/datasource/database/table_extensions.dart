@@ -26,11 +26,14 @@ extension UserTableExtension on UserTable {
 }
 
 extension ArtistTableExtension on ArtistTable {
-  ArtistEntity toEntity() {
+  ArtistEntity toEntity(List<SongEntity> songs) {
     return ArtistEntity(
       id: id,
       name: name,
       musicStyle: musicStyle,
+      age: age,
+      isActive: isActive == 1,
+      songs: songs,
     );
   }
 }

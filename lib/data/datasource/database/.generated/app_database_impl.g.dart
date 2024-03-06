@@ -1380,7 +1380,7 @@ abstract class _$AppDatabaseImpl extends GeneratedDatabase {
         }).asyncMap(playlist.mapFromRow);
   }
 
-  Selectable<SongTable> _getPlaylistWithSongs(int playlistId) {
+  Selectable<SongTable> _getSongsInPlaylist(int playlistId) {
     return customSelect(
         'SELECT s.* FROM song AS s INNER JOIN playlistwithsongs AS ps ON ps.song_id = s.id INNER JOIN artist AS a ON a.id = s.artist_id WHERE ps.playlist_id = ?1',
         variables: [
@@ -1389,6 +1389,18 @@ abstract class _$AppDatabaseImpl extends GeneratedDatabase {
         readsFrom: {
           song,
           playlistwithsongs,
+          artist,
+        }).asyncMap(song.mapFromRow);
+  }
+
+  Selectable<SongTable> _getSongsByArtist(int artistId) {
+    return customSelect(
+        'SELECT s.* FROM song AS s INNER JOIN artist AS a ON a.id = s.artist_id WHERE a.id = ?1',
+        variables: [
+          Variable<int>(artistId)
+        ],
+        readsFrom: {
+          song,
           artist,
         }).asyncMap(song.mapFromRow);
   }

@@ -93,8 +93,7 @@ class _UsersScreenState extends State<UsersScreen> {
                     context.read<UserBloc>().add(
                           GetUser(id: user.id), // Dispatch UserEvent with user.
                         );
-                    GoRouter.of(context)
-                        .push('/user/${user.id}'); // Navigate to user details screen.
+                    GoRouter.of(context).push('/user'); // Navigate to user details screen.
                   },
                   child: Text(user.username), // Display user username on button.
                 ),
