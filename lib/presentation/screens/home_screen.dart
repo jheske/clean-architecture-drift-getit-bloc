@@ -15,9 +15,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/injection_container.dart';
-import '../../data/datasource/database/app_database.dart';
-
 // This class represents the HomeScreen, which is a StatefulWidget used as the main
 // screen of the application. It contains a Scaffold with an AppBar and body content
 // to display buttons for navigating to different screens within the application.
@@ -30,9 +27,6 @@ class HomeScreen extends StatefulWidget {
 
 // State class for HomeScreen.
 class _HomeScreenState extends State<HomeScreen> {
-  // Database instance obtained from the service locator.
-  final database = serviceLocator.get<AppDatabase>();
-
   // Override initState method to perform initialization.
   @override
   void initState() {
