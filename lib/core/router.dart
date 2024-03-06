@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../presentation/screens/artist_screen.dart';
 import '../presentation/screens/artists_screen.dart';
 import '../presentation/screens/database_viewer_screen.dart';
+import '../presentation/screens/songs_screen.dart';
 import '../presentation/screens/user_screen.dart';
 
 final appRouter = GoRouter(
@@ -44,6 +45,13 @@ final appRouter = GoRouter(
       builder: (context, state) {
         return const ArtistScreen();
       },
+    ),
+    // Route for the users screen.
+    GoRoute(
+      name: 'songs',
+      path: '/songs',
+      builder: (context, state) =>
+          const SongsScreen(), // Build the UsersScreen when this route is matched.
     ),
     // Route for the database view screen.
     GoRoute(

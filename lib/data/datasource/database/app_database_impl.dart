@@ -88,6 +88,11 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
   }
 
   @override
+  Future<List<GetSongsWithArtistsResult>> getSongsWithArtists() async {
+    return await _getSongsWithArtists().get();
+  }
+
+  @override
   Future<int> insertArtist(ArtistModel model) async {
     final companion = await model.toCompanion();
     final id = await _insertArtist(
@@ -148,9 +153,9 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
     }
 
     final user = await _getUserById(id).getSingleOrNull();
-    if (kDebugMode) {
-      print('[insertUser]: $user');
-    }
+    // if (kDebugMode) {
+    //   print('[insertUser]: $user');
+    // }
     return id;
   }
 

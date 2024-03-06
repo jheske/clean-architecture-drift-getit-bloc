@@ -10,8 +10,6 @@ class GetArtistsUseCase implements UseCase<List<ArtistEntity>, void> {
 
   @override
   Future<List<ArtistEntity>> call({void params}) {
-    final users = _repository.getArtists();
-
-    return users;
+    return _repository.getArtists();
   }
 }

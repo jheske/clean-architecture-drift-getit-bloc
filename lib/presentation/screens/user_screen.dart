@@ -110,8 +110,7 @@ class UserScreen extends StatelessWidget {
                 final song = user?.playlist!.songs[index];
                 return ListTile(
                   title: Text(song?.name ?? 'Unknown'), // Display song name.
-                  subtitle:
-                      Text('Artist: ${song?.artist?.name ?? "Unknown"}'), // Display artist name.
+                  subtitle: Text('Artist: ${song?.artistName}'), // Display artist name.
                 );
               },
             ),

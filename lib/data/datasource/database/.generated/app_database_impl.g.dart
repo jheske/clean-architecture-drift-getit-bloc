@@ -1405,6 +1405,24 @@ abstract class _$AppDatabaseImpl extends GeneratedDatabase {
         }).asyncMap(song.mapFromRow);
   }
 
+  Selectable<GetSongsWithArtistsResult> _getSongsWithArtists() {
+    return customSelect(
+        'SELECT s.*, a.name AS artist_name FROM song AS s INNER JOIN artist AS a ON s.artist_id = a.id',
+        variables: [],
+        readsFrom: {
+          artist,
+          song,
+        }).map((QueryRow row) => GetSongsWithArtistsResult(
+          id: row.read<int>('id'),
+          name: row.read<String>('name'),
+          duration: row.readNullable<int>('duration'),
+          genre: row.readNullable<String>('genre'),
+          album: row.readNullable<String>('album'),
+          artistId: row.read<int>('artist_id'),
+          artistName: row.read<String>('artist_name'),
+        ));
+  }
+
   Future<int> _insertUser(
       int id, String username, String musicStyle, String favoriteSongName) {
     return customInsert(
@@ -1495,4 +1513,23 @@ abstract class _$AppDatabaseImpl extends GeneratedDatabase {
           ),
         ],
       );
+}
+
+class GetSongsWithArtistsResult {
+  final int id;
+  final String name;
+  final int? duration;
+  final String? genre;
+  final String? album;
+  final int artistId;
+  final String artistName;
+  GetSongsWithArtistsResult({
+    required this.id,
+    required this.name,
+    this.duration,
+    this.genre,
+    this.album,
+    required this.artistId,
+    required this.artistName,
+  });
 }

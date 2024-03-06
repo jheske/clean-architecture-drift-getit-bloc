@@ -82,6 +82,11 @@ _getSongsByArtist:
    INNER JOIN artist AS a ON a.id = s.artist_id
    WHERE a.id = :artistId;
 
+_getSongsWithArtists:
+    SELECT s.*, a.name AS artist_name
+    FROM song AS s
+    INNER JOIN artist AS a ON s.artist_id = a.id;
+
 -- CREATE and UPDATE OPERATIONS
 
 _insertUser:

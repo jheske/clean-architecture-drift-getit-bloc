@@ -8,7 +8,7 @@ import '../../../presentation/usecase/get_users_usecase.dart';
 class UsersBloc extends Bloc<UsersEvent, UsersState> {
   final GetUsersUseCase _getUsersUseCase;
 
-  UsersBloc(this._getUsersUseCase) : super(const UsersLoading.UsersLoading()) {
+  UsersBloc(this._getUsersUseCase) : super(const UsersLoading()) {
     on<GetUsers>(onGetUsers);
   }
 
@@ -31,6 +31,6 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
           favoriteSongName: 'Mock song 3',
           musicStyle: 'Mock style 3'));
     }
-    emit(UsersDone.UsersDone(users));
+    emit(UsersDone(users));
   }
 }

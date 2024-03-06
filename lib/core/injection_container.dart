@@ -9,10 +9,12 @@ import '../data/repository/repository.dart';
 import '../data/repository/repository_impl.dart';
 import '../presentation/usecase/get_artist_usecase.dart';
 import '../presentation/usecase/get_artists_usecase.dart';
+import '../presentation/usecase/get_songs_usecase.dart';
 import '../presentation/usecase/get_user_usecase.dart';
 import '../presentation/usecase/get_users_usecase.dart';
 import 'bloc/artist/artist_bloc.dart';
 import 'bloc/artist/artists_bloc.dart';
+import 'bloc/song/songs_bloc.dart';
 import 'bloc/user/user_bloc.dart';
 
 ///
@@ -44,12 +46,14 @@ Future<void> initializeServiceLocator() async {
   serviceLocator.registerSingleton<GetUserUseCase>(GetUserUseCase(serviceLocator()));
   serviceLocator.registerSingleton<GetArtistsUseCase>(GetArtistsUseCase(serviceLocator()));
   serviceLocator.registerSingleton<GetArtistUseCase>(GetArtistUseCase(serviceLocator()));
+  serviceLocator.registerSingleton<GetSongsUseCase>(GetSongsUseCase(serviceLocator()));
 
   //  Blocs are registered as factories.
   serviceLocator.registerFactory<UsersBloc>(() => UsersBloc(serviceLocator()));
   serviceLocator.registerFactory<UserBloc>(() => UserBloc(serviceLocator()));
   serviceLocator.registerFactory<ArtistsBloc>(() => ArtistsBloc(serviceLocator()));
   serviceLocator.registerFactory<ArtistBloc>(() => ArtistBloc(serviceLocator()));
+  serviceLocator.registerFactory<SongsBloc>(() => SongsBloc(serviceLocator()));
 }
 
 /// Generic function to retrieve an instance of a registered type from the service locator.

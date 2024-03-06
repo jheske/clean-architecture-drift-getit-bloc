@@ -9,6 +9,8 @@ import 'package:json_theme/json_theme.dart';
 import 'core/bloc/artist/artist_bloc.dart';
 import 'core/bloc/artist/artists_bloc.dart';
 import 'core/bloc/artist/artists_event.dart';
+import 'core/bloc/song/songs_bloc.dart';
+import 'core/bloc/song/songs_event.dart';
 import 'core/bloc/user/user_bloc.dart';
 import 'core/bloc/user/users_bloc.dart';
 import 'core/bloc/user/users_event.dart';
@@ -59,6 +61,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<ArtistBloc>(
             create: (context) => serviceLocator(),
+          ),
+          BlocProvider<SongsBloc>(
+            create: (context) => serviceLocator()..add(const GetSongs()),
           ),
         ],
         child: MaterialApp.router(

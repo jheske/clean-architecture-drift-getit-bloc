@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:clean_architecture_drift_getit_bloc/data/datasource/database/table_extensions.dart';
 import 'package:clean_architecture_drift_getit_bloc/data/repository/repository.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 
 import '../../domain/entity/artist_entity.dart';
 import '../../domain/entity/playlist_entity.dart';
@@ -28,18 +27,18 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
     await _db.insertSongList(musicModel.songs);
     await _db.insertUserList(musicModel.users);
 
-    if (kDebugMode) {
-      final firstRepoUser = await getUser(12345);
-
-      if (kDebugMode) {
-        print('[saveToDatabase] repo getUser() name: ${firstRepoUser?.username ?? 'none'}');
-      }
-
-      final firstArtist = await _db.getArtist(1);
-      final firstSong = await _db.getSong(1);
-      print('[saveToDatabase] first _db.getArtist name: ${firstArtist?.name ?? 'none'}');
-      print('[saveToDatabase] first _db.getSong name: ${firstSong?.name ?? 'none'}');
-    }
+    // if (kDebugMode) {
+    //   final firstRepoUser = await getUser(12345);
+    //
+    //   if (kDebugMode) {
+    //     print('[saveToDatabase] repo getUser() name: ${firstRepoUser?.username ?? 'none'}');
+    //   }
+    //
+    //   final firstArtist = await _db.getArtist(1);
+    //   final firstSong = await _db.getSong(1);
+    //   print('[saveToDatabase] first _db.getArtist name: ${firstArtist?.name ?? 'none'}');
+    //   print('[saveToDatabase] first _db.getSong name: ${firstSong?.name ?? 'none'}');
+    // }
   }
 
   @override
@@ -103,6 +102,21 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
     for (var artistTable in artistTables) {
       // This query doesn't include songs
       entityList.add(artistTable.toEntity([]));
+    }
+    return entityList;
+  }
+
+  @override
+  Future<List<SongEntity>> getSongs() async {
+    List<SongEntity> entityList = [];
+
+    final resultTables = await _db.getSongsWithArtists();
+    for (var table in resultTables) {
+      entityList.add(SongEntity(
+        id: table.id,
+        name: table.name,
+        artistName: table.artistName,
+      ));
     }
     return entityList;
   }

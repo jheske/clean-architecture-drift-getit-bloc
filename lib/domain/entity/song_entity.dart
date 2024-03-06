@@ -14,26 +14,25 @@
 /// along with flutter-clean-architecture-drift-retrofit. If not, see <https:///www.apache.org/licenses/LICENSE-2.0>.
 
 import '../../data/datasource/remote/model/song_model.dart';
-import 'artist_entity.dart';
 
 class SongEntity {
   int id;
   String? name;
   int? duration;
-  ArtistEntity? artist = ArtistEntity();
+  String? artistName;
 
   SongEntity({
     this.id = -1,
-    this.name = '',
+    this.name = 'unknown',
     this.duration = 0,
-    this.artist,
+    this.artistName = 'unknown',
   });
 
   void setSong(SongEntity song) {
     id = song.id;
     name = song.name;
     duration = song.duration;
-    artist = song.artist;
+    artistName = song.artistName;
   }
 
   static Future<SongEntity?> convertTableToEntity(SongModel? songModel) async {
@@ -47,13 +46,4 @@ class SongEntity {
       return null;
     }
   }
-
-  // SongModel toModel() {
-  //   return SongModel(
-  //     id: id,
-  //     name: name,
-  //     duration: duration,
-  //     artistId: artist?.id,
-  //   );
-  // }
 }

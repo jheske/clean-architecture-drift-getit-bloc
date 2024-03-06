@@ -10,11 +10,11 @@ abstract class UsersState {
 }
 
 class UsersLoading extends UsersState {
-  const UsersLoading.UsersLoading();
+  const UsersLoading();
 }
 
 class UsersDone extends UsersState {
-  const UsersDone.UsersDone(List<UserEntity> users) : super(users: users);
+  const UsersDone(List<UserEntity> users) : super(users: users);
 }
 
 class UsersError extends UsersState {

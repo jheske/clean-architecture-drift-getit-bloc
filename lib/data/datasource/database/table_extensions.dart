@@ -39,12 +39,14 @@ extension ArtistTableExtension on ArtistTable {
 }
 
 extension SongTableExtension on SongTable {
+  // SongTable doesn't have an artistName. That field is used when
+  // we create a SongEntity from a join with the Artist table.
   SongEntity toEntity() {
     return SongEntity(
       id: id,
       name: name,
       duration: duration,
-      artist: ArtistEntity(),
+      artistName: '',
     );
   }
 }
