@@ -21,13 +21,6 @@ class User extends Table with TableInfo<User, UserTable> {
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       $customConstraints: 'NOT NULL');
-  static const VerificationMeta _musicStyleMeta =
-      const VerificationMeta('musicStyle');
-  late final GeneratedColumn<String> musicStyle = GeneratedColumn<String>(
-      'music_style', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: true,
-      $customConstraints: 'NOT NULL');
   static const VerificationMeta _favoriteSongNameMeta =
       const VerificationMeta('favoriteSongName');
   late final GeneratedColumn<String> favoriteSongName = GeneratedColumn<String>(
@@ -36,8 +29,7 @@ class User extends Table with TableInfo<User, UserTable> {
       requiredDuringInsert: true,
       $customConstraints: 'NOT NULL');
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, username, musicStyle, favoriteSongName];
+  List<GeneratedColumn> get $columns => [id, username, favoriteSongName];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -56,14 +48,6 @@ class User extends Table with TableInfo<User, UserTable> {
           username.isAcceptableOrUnknown(data['username']!, _usernameMeta));
     } else if (isInserting) {
       context.missing(_usernameMeta);
-    }
-    if (data.containsKey('music_style')) {
-      context.handle(
-          _musicStyleMeta,
-          musicStyle.isAcceptableOrUnknown(
-              data['music_style']!, _musicStyleMeta));
-    } else if (isInserting) {
-      context.missing(_musicStyleMeta);
     }
     if (data.containsKey('favorite_song_name')) {
       context.handle(
@@ -86,8 +70,6 @@ class User extends Table with TableInfo<User, UserTable> {
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       username: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}username'])!,
-      musicStyle: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}music_style'])!,
       favoriteSongName: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}favorite_song_name'])!,
     );
@@ -105,19 +87,16 @@ class User extends Table with TableInfo<User, UserTable> {
 class UserTable extends DataClass implements Insertable<UserTable> {
   final int id;
   final String username;
-  final String musicStyle;
   final String favoriteSongName;
   const UserTable(
       {required this.id,
       required this.username,
-      required this.musicStyle,
       required this.favoriteSongName});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['username'] = Variable<String>(username);
-    map['music_style'] = Variable<String>(musicStyle);
     map['favorite_song_name'] = Variable<String>(favoriteSongName);
     return map;
   }
@@ -126,7 +105,6 @@ class UserTable extends DataClass implements Insertable<UserTable> {
     return UserCompanion(
       id: Value(id),
       username: Value(username),
-      musicStyle: Value(musicStyle),
       favoriteSongName: Value(favoriteSongName),
     );
   }
@@ -137,7 +115,6 @@ class UserTable extends DataClass implements Insertable<UserTable> {
     return UserTable(
       id: serializer.fromJson<int>(json['id']),
       username: serializer.fromJson<String>(json['username']),
-      musicStyle: serializer.fromJson<String>(json['music_style']),
       favoriteSongName: serializer.fromJson<String>(json['favorite_song_name']),
     );
   }
@@ -147,20 +124,14 @@ class UserTable extends DataClass implements Insertable<UserTable> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'username': serializer.toJson<String>(username),
-      'music_style': serializer.toJson<String>(musicStyle),
       'favorite_song_name': serializer.toJson<String>(favoriteSongName),
     };
   }
 
-  UserTable copyWith(
-          {int? id,
-          String? username,
-          String? musicStyle,
-          String? favoriteSongName}) =>
+  UserTable copyWith({int? id, String? username, String? favoriteSongName}) =>
       UserTable(
         id: id ?? this.id,
         username: username ?? this.username,
-        musicStyle: musicStyle ?? this.musicStyle,
         favoriteSongName: favoriteSongName ?? this.favoriteSongName,
       );
   @override
@@ -168,53 +139,45 @@ class UserTable extends DataClass implements Insertable<UserTable> {
     return (StringBuffer('UserTable(')
           ..write('id: $id, ')
           ..write('username: $username, ')
-          ..write('musicStyle: $musicStyle, ')
           ..write('favoriteSongName: $favoriteSongName')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, username, musicStyle, favoriteSongName);
+  int get hashCode => Object.hash(id, username, favoriteSongName);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is UserTable &&
           other.id == this.id &&
           other.username == this.username &&
-          other.musicStyle == this.musicStyle &&
           other.favoriteSongName == this.favoriteSongName);
 }
 
 class UserCompanion extends UpdateCompanion<UserTable> {
   final Value<int> id;
   final Value<String> username;
-  final Value<String> musicStyle;
   final Value<String> favoriteSongName;
   const UserCompanion({
     this.id = const Value.absent(),
     this.username = const Value.absent(),
-    this.musicStyle = const Value.absent(),
     this.favoriteSongName = const Value.absent(),
   });
   UserCompanion.insert({
     this.id = const Value.absent(),
     required String username,
-    required String musicStyle,
     required String favoriteSongName,
   })  : username = Value(username),
-        musicStyle = Value(musicStyle),
         favoriteSongName = Value(favoriteSongName);
   static Insertable<UserTable> custom({
     Expression<int>? id,
     Expression<String>? username,
-    Expression<String>? musicStyle,
     Expression<String>? favoriteSongName,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (username != null) 'username': username,
-      if (musicStyle != null) 'music_style': musicStyle,
       if (favoriteSongName != null) 'favorite_song_name': favoriteSongName,
     });
   }
@@ -222,12 +185,10 @@ class UserCompanion extends UpdateCompanion<UserTable> {
   UserCompanion copyWith(
       {Value<int>? id,
       Value<String>? username,
-      Value<String>? musicStyle,
       Value<String>? favoriteSongName}) {
     return UserCompanion(
       id: id ?? this.id,
       username: username ?? this.username,
-      musicStyle: musicStyle ?? this.musicStyle,
       favoriteSongName: favoriteSongName ?? this.favoriteSongName,
     );
   }
@@ -241,9 +202,6 @@ class UserCompanion extends UpdateCompanion<UserTable> {
     if (username.present) {
       map['username'] = Variable<String>(username.value);
     }
-    if (musicStyle.present) {
-      map['music_style'] = Variable<String>(musicStyle.value);
-    }
     if (favoriteSongName.present) {
       map['favorite_song_name'] = Variable<String>(favoriteSongName.value);
     }
@@ -255,7 +213,6 @@ class UserCompanion extends UpdateCompanion<UserTable> {
     return (StringBuffer('UserCompanion(')
           ..write('id: $id, ')
           ..write('username: $username, ')
-          ..write('musicStyle: $musicStyle, ')
           ..write('favoriteSongName: $favoriteSongName')
           ..write(')'))
         .toString();
@@ -1431,14 +1388,12 @@ abstract class _$AppDatabaseImpl extends GeneratedDatabase {
         ));
   }
 
-  Future<int> _insertUser(
-      int id, String username, String musicStyle, String favoriteSongName) {
+  Future<int> _insertUser(int id, String username, String favoriteSongName) {
     return customInsert(
-      'INSERT INTO user (id, username, music_style, favorite_song_name) VALUES (?1, ?2, ?3, ?4)',
+      'INSERT INTO user (id, username, favorite_song_name) VALUES (?1, ?2, ?3)',
       variables: [
         Variable<int>(id),
         Variable<String>(username),
-        Variable<String>(musicStyle),
         Variable<String>(favoriteSongName)
       ],
       updates: {user},

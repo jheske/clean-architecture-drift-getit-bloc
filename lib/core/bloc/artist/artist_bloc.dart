@@ -20,7 +20,7 @@ class ArtistBloc extends Bloc<ArtistEvent, ArtistState> {
     } else {
       emit(
         ArtistDone(
-          ArtistEntity(id: 1, name: 'Mock user 1', age: 20, musicStyle: 'Mock style 1'),
+          ArtistEntity(id: 1, name: 'Mock user 1', age: 20),
         ),
       );
     }

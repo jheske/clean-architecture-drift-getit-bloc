@@ -143,7 +143,6 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
     final id = await _insertUser(
       companion.id.value,
       companion.username.value,
-      companion.musicStyle.value,
       companion.favoriteSongName.value,
     );
 
@@ -151,8 +150,8 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
       await insertPlaylist(model.playlist!);
     }
 
-    final user = await _getUserById(id).getSingleOrNull();
     // if (kDebugMode) {
+    //   final user = await _getUserById(id).getSingleOrNull();
     //   print('[insertUser]: $user');
     // }
     return id;
@@ -193,34 +192,6 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
     }
     return id;
   }
-
-  // Future<void> insertPlaylistWithSongs(PlaylistModel model) async {
-  //   final companion = model.toCompanion();
-  //   await _insertPlaylist(
-  //     companion.id.value,
-  //     companion.name.value,
-  //     companion.description.value,
-  //     companion.userId.value,
-  //   );
-  //   for (final song in model.songs) {
-  //     await insertSong(song);
-  //   }
-  // }
-
-  // Future<void> insertPlaylist(PlaylistModel model) async {
-  //   final companion = PlaylistCompanion.insert(
-  //     id: Value(model.id),
-  //     name: model.name,
-  //     description: model.description,
-  //     userId: model.userId,
-  //   );
-  //   await _insertPlaylist(
-  //     companion.id.value,
-  //     companion.name.value,
-  //     companion.description.value,
-  //     companion.userId.value,
-  //   );
-  // }
 }
 
 // Function to open the database connection.

@@ -12,7 +12,6 @@ extension UserModelExtension on UserModel {
     return UserCompanion(
       id: Value(id ?? -1),
       username: Value(username ?? ''),
-      musicStyle: Value(musicStyle ?? ''),
       favoriteSongName: Value(favoriteSongName ?? ''),
     );
   }

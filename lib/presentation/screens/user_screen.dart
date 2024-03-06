@@ -78,15 +78,6 @@ class UserScreen extends StatelessWidget {
                 const SizedBox(height: 10), // Spacer.
                 Row(
                   children: [
-                    Text('Music Style:',
-                        style: theme.textTheme.titleMedium), // Display music style.
-                    const SizedBox(width: 10), // Spacer.
-                    Text(user?.musicStyle ?? 'none') // Display user's music style.
-                  ],
-                ),
-                const SizedBox(height: 10), // Spacer.
-                Row(
-                  children: [
                     Text('Favorite Song:',
                         style: theme.textTheme.titleMedium), // Display favorite song.
                     const SizedBox(width: 10), // Spacer.

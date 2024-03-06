@@ -10,18 +10,13 @@ extension UserTableExtension on UserTable {
     return UserModel(
       id: id,
       username: username,
-      musicStyle: musicStyle,
       favoriteSongName: favoriteSongName,
     );
   }
 
   UserEntity toEntity(PlaylistEntity? playlist) {
     return UserEntity(
-        id: id,
-        username: username,
-        musicStyle: musicStyle,
-        favoriteSongName: favoriteSongName,
-        playlist: playlist);
+        id: id, username: username, favoriteSongName: favoriteSongName, playlist: playlist);
   }
 }
 

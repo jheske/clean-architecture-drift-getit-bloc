@@ -3,7 +3,6 @@
 CREATE TABLE [user] (
     id INT NOT NULL PRIMARY KEY,
     username TEXT NOT NULL,
-    music_style TEXT NOT NULL,
     favorite_song_name TEXT NOT NULL
 ) As UserTable;
 
@@ -90,8 +89,8 @@ _getSongsWithArtists:
 -- CREATE and UPDATE OPERATIONS
 
 _insertUser:
-    INSERT INTO [user] (id, username, music_style, favorite_song_name)
-    VALUES (:id, :username, :music_style, :favorite_song_name);
+    INSERT INTO [user] (id, username, favorite_song_name)
+    VALUES (:id, :username, :favorite_song_name);
 
 _insertArtist:
     INSERT INTO [artist] (id, name, age, music_style, is_active)

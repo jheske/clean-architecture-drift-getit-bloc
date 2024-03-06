@@ -21,10 +21,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(
         UserDone(
           UserEntity(
-              id: 1,
-              username: 'Mock user 1',
-              favoriteSongName: 'Mock song 1',
-              musicStyle: 'Mock style 1'),
+            id: 1,
+            username: 'Mock user 1',
+            favoriteSongName: 'Mock song 1',
+          ),
         ),
       );
     }

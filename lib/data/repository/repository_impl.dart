@@ -57,13 +57,13 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   }
 
   @override
-  Future<UserEntity?> getUser(int id) async {
-    final userTable = await _db.getUser(id);
+  Future<UserEntity?> getUser(int userId) async {
+    final userTable = await _db.getUser(userId);
     PlaylistEntity playlistEntity = const PlaylistEntity();
     final List<SongEntity> songEntities = [];
 
     if (userTable != null) {
-      final PlaylistTable? playlistTable = await _db.getPlaylistByUserId(id);
+      final PlaylistTable? playlistTable = await _db.getPlaylistByUserId(userId);
       final songsInPlaylistResult = await _db.getSongsInPlaylist(playlistTable!.id);
       for (var song in songsInPlaylistResult) {
         songEntities.add(SongEntity(

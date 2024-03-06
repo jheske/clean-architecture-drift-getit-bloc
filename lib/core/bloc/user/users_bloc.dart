@@ -16,20 +16,20 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     List<UserEntity> users = await _getUsersUseCase();
     if (users.isEmpty) {
       users.add(UserEntity(
-          id: 1,
-          username: 'Mock user 1',
-          favoriteSongName: 'Mock song 1',
-          musicStyle: 'Mock style 1'));
+        id: 1,
+        username: 'Mock user 1',
+        favoriteSongName: 'Mock song 1',
+      ));
       users.add(UserEntity(
-          id: 1,
-          username: 'Mock user 2',
-          favoriteSongName: 'Mock song 2',
-          musicStyle: 'Mock style 2'));
+        id: 1,
+        username: 'Mock user 2',
+        favoriteSongName: 'Mock song 2',
+      ));
       users.add(UserEntity(
-          id: 1,
-          username: 'Mock user 3',
-          favoriteSongName: 'Mock song 3',
-          musicStyle: 'Mock style 3'));
+        id: 1,
+        username: 'Mock user 3',
+        favoriteSongName: 'Mock song 3',
+      ));
     }
     emit(UsersDone(users));
   }

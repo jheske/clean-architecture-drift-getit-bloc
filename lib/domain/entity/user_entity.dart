@@ -21,14 +21,12 @@ class UserEntity {
   int id;
   String username;
   String? favoriteSongName;
-  String? musicStyle;
   PlaylistEntity? playlist;
 
   UserEntity({
     this.id = -1,
     this.username = '',
     this.favoriteSongName,
-    this.musicStyle,
     this.playlist,
   });
 
@@ -36,7 +34,6 @@ class UserEntity {
     id = user.id;
     username = user.username;
     favoriteSongName = user.favoriteSongName;
-    musicStyle = user.musicStyle;
     playlist = user.playlist;
   }
 
@@ -51,7 +48,6 @@ class UserEntity {
       id: id ?? this.id,
       username: username ?? this.username,
       favoriteSongName: favoriteSongName ?? this.favoriteSongName,
-      musicStyle: musicStyle ?? this.musicStyle,
       playlist: playlist ?? this.playlist,
     );
   }
@@ -64,7 +60,6 @@ class UserEntity {
       return UserEntity(
         id: userModel.id ?? -1,
         username: userModel.username ?? '',
-        musicStyle: userModel.musicStyle,
         favoriteSongName: userModel.favoriteSongName,
         playlist: playlist,
       );

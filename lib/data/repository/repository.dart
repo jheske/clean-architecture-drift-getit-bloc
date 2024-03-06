@@ -9,7 +9,7 @@ abstract class DatabaseRepository {
   Future<ArtistEntity?> getArtist(int id);
   // // Stream<List<UserTable>> watchUsers();
   Future<List<UserEntity>> getUsers();
-  Future<UserEntity?> getUser(int id);
+  Future<UserEntity?> getUser(int userId);
   Future<List<SongEntity>> getSongs();
   Future<void> saveToDatabase(MusicModel musicModel);
   Future<MusicModel> fetchMusic();
