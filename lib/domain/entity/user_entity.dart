@@ -53,12 +53,13 @@ class UserEntity {
   }
 
   static Future<UserEntity?> toEntity(
-    UserModel? userModel,
+    int userId, // from database insert
+    UserModel? userModel, // from API
     PlaylistEntity? playlist,
   ) async {
     if (userModel != null) {
       return UserEntity(
-        id: userModel.id ?? -1,
+        id: userId,
         username: userModel.username ?? '',
         favoriteSongName: userModel.favoriteSongName,
         playlist: playlist,

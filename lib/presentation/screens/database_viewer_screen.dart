@@ -14,7 +14,6 @@
 /// You should have received a copy of the Apache License, Version 2.0
 /// along with flutter-clean-architecture-drift-retrofit. If not, see <https:///www.apache.org/licenses/LICENSE-2.0>.
 
-import 'package:drift/src/runtime/api/runtime_api.dart';
 import 'package:drift_db_viewer/drift_db_viewer.dart'; // Package for viewing Drift databases.
 import 'package:flutter/material.dart'; // Flutter material library.
 
@@ -36,11 +35,11 @@ class DatabaseViewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // Return Scaffold widget with AppBar and body content.
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Database View'), // Set app bar title.
-      ),
-      body: DriftDbViewer(
-          database as GeneratedDatabase), // Display DriftDbViewer widget with the database.
-    );
+        appBar: AppBar(
+          title: const Text('Database View'), // Set app bar title.
+        ),
+        body: DriftDbViewer(
+          database,
+        ));
   }
 }

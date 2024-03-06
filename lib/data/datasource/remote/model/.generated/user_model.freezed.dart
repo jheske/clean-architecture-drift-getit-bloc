@@ -20,7 +20,6 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserModel {
-  int? get id => throw _privateConstructorUsedError;
   String? get username => throw _privateConstructorUsedError;
   @JsonKey(name: 'music_style')
   String? get musicStyle => throw _privateConstructorUsedError;
@@ -40,8 +39,7 @@ abstract class $UserModelCopyWith<$Res> {
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
   $Res call(
-      {int? id,
-      String? username,
+      {String? username,
       @JsonKey(name: 'music_style') String? musicStyle,
       @JsonKey(name: 'favorite_song_name') String? favoriteSongName,
       PlaylistModel? playlist});
@@ -62,17 +60,12 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
     Object? username = freezed,
     Object? musicStyle = freezed,
     Object? favoriteSongName = freezed,
     Object? playlist = freezed,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
       username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -114,8 +107,7 @@ abstract class _$$RemoteUserModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int? id,
-      String? username,
+      {String? username,
       @JsonKey(name: 'music_style') String? musicStyle,
       @JsonKey(name: 'favorite_song_name') String? favoriteSongName,
       PlaylistModel? playlist});
@@ -135,17 +127,12 @@ class __$$RemoteUserModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
     Object? username = freezed,
     Object? musicStyle = freezed,
     Object? favoriteSongName = freezed,
     Object? playlist = freezed,
   }) {
     return _then(_$RemoteUserModelImpl(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
       username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -170,8 +157,7 @@ class __$$RemoteUserModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RemoteUserModelImpl extends _RemoteUserModel {
   const _$RemoteUserModelImpl(
-      {this.id,
-      this.username,
+      {this.username,
       @JsonKey(name: 'music_style') this.musicStyle,
       @JsonKey(name: 'favorite_song_name') this.favoriteSongName,
       this.playlist})
@@ -180,8 +166,6 @@ class _$RemoteUserModelImpl extends _RemoteUserModel {
   factory _$RemoteUserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$RemoteUserModelImplFromJson(json);
 
-  @override
-  final int? id;
   @override
   final String? username;
   @override
@@ -195,7 +179,7 @@ class _$RemoteUserModelImpl extends _RemoteUserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, username: $username, musicStyle: $musicStyle, favoriteSongName: $favoriteSongName, playlist: $playlist)';
+    return 'UserModel(username: $username, musicStyle: $musicStyle, favoriteSongName: $favoriteSongName, playlist: $playlist)';
   }
 
   @override
@@ -203,7 +187,6 @@ class _$RemoteUserModelImpl extends _RemoteUserModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RemoteUserModelImpl &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.username, username) ||
                 other.username == username) &&
             (identical(other.musicStyle, musicStyle) ||
@@ -217,7 +200,7 @@ class _$RemoteUserModelImpl extends _RemoteUserModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, username, musicStyle, favoriteSongName, playlist);
+      runtimeType, username, musicStyle, favoriteSongName, playlist);
 
   @JsonKey(ignore: true)
   @override
@@ -236,8 +219,7 @@ class _$RemoteUserModelImpl extends _RemoteUserModel {
 
 abstract class _RemoteUserModel extends UserModel {
   const factory _RemoteUserModel(
-      {final int? id,
-      final String? username,
+      {final String? username,
       @JsonKey(name: 'music_style') final String? musicStyle,
       @JsonKey(name: 'favorite_song_name') final String? favoriteSongName,
       final PlaylistModel? playlist}) = _$RemoteUserModelImpl;
@@ -246,8 +228,6 @@ abstract class _RemoteUserModel extends UserModel {
   factory _RemoteUserModel.fromJson(Map<String, dynamic> json) =
       _$RemoteUserModelImpl.fromJson;
 
-  @override
-  int? get id;
   @override
   String? get username;
   @override

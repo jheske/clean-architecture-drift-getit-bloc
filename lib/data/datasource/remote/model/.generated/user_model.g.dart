@@ -9,7 +9,6 @@ part of '../user_model.dart';
 _$RemoteUserModelImpl _$$RemoteUserModelImplFromJson(
         Map<String, dynamic> json) =>
     _$RemoteUserModelImpl(
-      id: json['id'] as int?,
       username: json['username'] as String?,
       musicStyle: json['music_style'] as String?,
       favoriteSongName: json['favorite_song_name'] as String?,
@@ -21,7 +20,6 @@ _$RemoteUserModelImpl _$$RemoteUserModelImplFromJson(
 Map<String, dynamic> _$$RemoteUserModelImplToJson(
         _$RemoteUserModelImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'username': instance.username,
       'music_style': instance.musicStyle,
       'favorite_song_name': instance.favoriteSongName,

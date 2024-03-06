@@ -10,7 +10,6 @@ import '../../database/app_database_impl.dart';
 extension UserModelExtension on UserModel {
   toCompanion() {
     return UserCompanion(
-      id: Value(id ?? -1),
       username: Value(username ?? ''),
       favoriteSongName: Value(favoriteSongName ?? ''),
     );
@@ -40,9 +39,8 @@ extension SongModelExtension on SongModel {
 }
 
 extension PlaylistModelExtension on PlaylistModel {
-  toCompanion() {
+  toCompanion(int userId) {
     return PlaylistCompanion(
-      id: Value(id ?? -1),
       name: Value(name ?? ''),
       userId: Value(userId ?? 0),
     );

@@ -140,21 +140,20 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
   @override
   Future<int> insertUser(UserModel model) async {
     final companion = model.toCompanion();
-    final id = await _insertUser(
-      companion.id.value,
+    final userId = await _insertUser(
       companion.username.value,
       companion.favoriteSongName.value,
     );
 
     if (model.playlist != null) {
-      await insertPlaylist(model.playlist!);
+      await insertPlaylist(userId, model.playlist!);
     }
 
-    // if (kDebugMode) {
-    //   final user = await _getUserById(id).getSingleOrNull();
-    //   print('[insertUser]: $user');
-    // }
-    return id;
+    if (kDebugMode) {
+      final user = await _getUserById(userId).getSingleOrNull();
+      print('[insertUser]: $user');
+    }
+    return userId;
   }
 
   @override
@@ -179,18 +178,17 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
     });
   }
 
-  Future<int> insertPlaylist(PlaylistModel playlist) async {
-    final companion = playlist.toCompanion();
-    final id = await _insertPlaylist(
-      companion.id.value,
+  Future<int> insertPlaylist(int userId, PlaylistModel playlist) async {
+    final companion = playlist.toCompanion(userId);
+    final playlistId = await _insertPlaylist(
       companion.name.value,
       companion.userId.value,
     );
 
     if (playlist.songs != null) {
-      await _savePlaylistSongs(playlist.songs!, playlist.id);
+      await _savePlaylistSongs(playlist.songs!, playlistId);
     }
-    return id;
+    return playlistId;
   }
 }
 

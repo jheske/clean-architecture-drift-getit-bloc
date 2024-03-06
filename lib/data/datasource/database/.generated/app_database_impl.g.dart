@@ -11,9 +11,10 @@ class User extends Table with TableInfo<User, UserTable> {
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
+      hasAutoIncrement: true,
       type: DriftSqlType.int,
       requiredDuringInsert: false,
-      $customConstraints: 'NOT NULL PRIMARY KEY');
+      $customConstraints: 'NOT NULL PRIMARY KEY AUTOINCREMENT');
   static const VerificationMeta _usernameMeta =
       const VerificationMeta('username');
   late final GeneratedColumn<String> username = GeneratedColumn<String>(
@@ -847,9 +848,10 @@ class Playlist extends Table with TableInfo<Playlist, PlaylistTable> {
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
+      hasAutoIncrement: true,
       type: DriftSqlType.int,
       requiredDuringInsert: false,
-      $customConstraints: 'NOT NULL PRIMARY KEY');
+      $customConstraints: 'NOT NULL PRIMARY KEY AUTOINCREMENT');
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
       'name', aliasedName, false,
@@ -1388,11 +1390,10 @@ abstract class _$AppDatabaseImpl extends GeneratedDatabase {
         ));
   }
 
-  Future<int> _insertUser(int id, String username, String favoriteSongName) {
+  Future<int> _insertUser(String username, String favoriteSongName) {
     return customInsert(
-      'INSERT INTO user (id, username, favorite_song_name) VALUES (?1, ?2, ?3)',
+      'INSERT INTO user (username, favorite_song_name) VALUES (?1, ?2)',
       variables: [
-        Variable<int>(id),
         Variable<String>(username),
         Variable<String>(favoriteSongName)
       ],
@@ -1431,22 +1432,18 @@ abstract class _$AppDatabaseImpl extends GeneratedDatabase {
     );
   }
 
-  Future<int> _insertPlaylist(int id, String name, int userId) {
+  Future<int> _insertPlaylist(String name, int userId) {
     return customInsert(
-      'INSERT INTO playlist (id, name, user_id) VALUES (?1, ?2, ?3)',
-      variables: [
-        Variable<int>(id),
-        Variable<String>(name),
-        Variable<int>(userId)
-      ],
+      'INSERT INTO playlist (name, user_id) VALUES (?1, ?2)',
+      variables: [Variable<String>(name), Variable<int>(userId)],
       updates: {playlist},
     );
   }
 
-  Future<int> _insertPlaylistWithSongs(int songId, int plaaylistId) {
+  Future<int> _insertPlaylistWithSongs(int songId, int playlistId) {
     return customInsert(
       'INSERT INTO playlistwithsongs (song_id, playlist_id) VALUES (?1, ?2)',
-      variables: [Variable<int>(songId), Variable<int>(plaaylistId)],
+      variables: [Variable<int>(songId), Variable<int>(playlistId)],
       updates: {playlistwithsongs},
     );
   }

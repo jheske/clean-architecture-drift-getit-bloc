@@ -21,8 +21,6 @@ part '.generated/playlist_model.g.dart';
 @freezed
 class PlaylistModel with _$PlaylistModel {
   const factory PlaylistModel({
-    required int id,
-    @JsonKey(name: "user_id") required int userId,
     String? name,
     List<int?>? songs,
   }) = _PlaylistModel;

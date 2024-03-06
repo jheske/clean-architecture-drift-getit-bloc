@@ -1,7 +1,7 @@
 -- CREATE TABLES
 
 CREATE TABLE [user] (
-    id INT NOT NULL PRIMARY KEY,
+    id INT NOT NULL PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL,
     favorite_song_name TEXT NOT NULL
 ) As UserTable;
@@ -24,7 +24,7 @@ CREATE TABLE [song] (
 ) as SongTable;
 
 CREATE TABLE [playlist] (
-    id INT NOT NULL PRIMARY KEY,
+    id INT NOT NULL PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     user_id INT NOT NULL REFERENCES user(id) ON DELETE CASCADE,
     CONSTRAINT unique_user_playlist UNIQUE (user_id)
@@ -89,8 +89,8 @@ _getSongsWithArtists:
 -- CREATE and UPDATE OPERATIONS
 
 _insertUser:
-    INSERT INTO [user] (id, username, favorite_song_name)
-    VALUES (:id, :username, :favorite_song_name);
+    INSERT INTO [user] (username, favorite_song_name)
+    VALUES (:username, :favorite_song_name);
 
 _insertArtist:
     INSERT INTO [artist] (id, name, age, music_style, is_active)
@@ -101,12 +101,12 @@ _insertSong:
     VALUES (:id, :name, :duration, :genre, :album, :artist_id);
 
 _insertPlaylist:
-    INSERT INTO [playlist] (id, name, user_id)
-    VALUES (:id, :name, :user_id);
+    INSERT INTO [playlist] (name, user_id)
+    VALUES (:name, :user_id);
 
 _insertPlaylistWithSongs:
     INSERT INTO [playlistwithsongs] (song_id, playlist_id)
-    VALUES (:songId, :plaaylist_id);
+    VALUES (:songId, :playlist_id);
 
 -- DELETE OPERATIONS
 

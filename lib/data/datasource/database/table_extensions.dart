@@ -8,7 +8,6 @@ import 'app_database_impl.dart';
 extension UserTableExtension on UserTable {
   UserModel toModel() {
     return UserModel(
-      id: id,
       username: username,
       favoriteSongName: favoriteSongName,
     );

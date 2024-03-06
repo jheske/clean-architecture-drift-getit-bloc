@@ -23,7 +23,6 @@ part '.generated/user_model.g.dart';
 @freezed
 class UserModel with _$UserModel {
   const factory UserModel({
-    int? id,
     String? username,
     @JsonKey(name: 'music_style') String? musicStyle,
     @JsonKey(name: 'favorite_song_name') String? favoriteSongName,

@@ -20,9 +20,6 @@ PlaylistModel _$PlaylistModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PlaylistModel {
-  int get id => throw _privateConstructorUsedError;
-  @JsonKey(name: "user_id")
-  int get userId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   List<int?>? get songs => throw _privateConstructorUsedError;
 
@@ -38,11 +35,7 @@ abstract class $PlaylistModelCopyWith<$Res> {
           PlaylistModel value, $Res Function(PlaylistModel) then) =
       _$PlaylistModelCopyWithImpl<$Res, PlaylistModel>;
   @useResult
-  $Res call(
-      {int id,
-      @JsonKey(name: "user_id") int userId,
-      String? name,
-      List<int?>? songs});
+  $Res call({String? name, List<int?>? songs});
 }
 
 /// @nodoc
@@ -58,20 +51,10 @@ class _$PlaylistModelCopyWithImpl<$Res, $Val extends PlaylistModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? userId = null,
     Object? name = freezed,
     Object? songs = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as int,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -92,11 +75,7 @@ abstract class _$$PlaylistModelImplCopyWith<$Res>
       __$$PlaylistModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int id,
-      @JsonKey(name: "user_id") int userId,
-      String? name,
-      List<int?>? songs});
+  $Res call({String? name, List<int?>? songs});
 }
 
 /// @nodoc
@@ -110,20 +89,10 @@ class __$$PlaylistModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? userId = null,
     Object? name = freezed,
     Object? songs = freezed,
   }) {
     return _then(_$PlaylistModelImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as int,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -139,22 +108,13 @@ class __$$PlaylistModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$PlaylistModelImpl extends _PlaylistModel {
-  const _$PlaylistModelImpl(
-      {required this.id,
-      @JsonKey(name: "user_id") required this.userId,
-      this.name,
-      final List<int?>? songs})
+  const _$PlaylistModelImpl({this.name, final List<int?>? songs})
       : _songs = songs,
         super._();
 
   factory _$PlaylistModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$PlaylistModelImplFromJson(json);
 
-  @override
-  final int id;
-  @override
-  @JsonKey(name: "user_id")
-  final int userId;
   @override
   final String? name;
   final List<int?>? _songs;
@@ -169,7 +129,7 @@ class _$PlaylistModelImpl extends _PlaylistModel {
 
   @override
   String toString() {
-    return 'PlaylistModel(id: $id, userId: $userId, name: $name, songs: $songs)';
+    return 'PlaylistModel(name: $name, songs: $songs)';
   }
 
   @override
@@ -177,16 +137,14 @@ class _$PlaylistModelImpl extends _PlaylistModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PlaylistModelImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality().equals(other._songs, _songs));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, userId, name,
-      const DeepCollectionEquality().hash(_songs));
+  int get hashCode => Object.hash(
+      runtimeType, name, const DeepCollectionEquality().hash(_songs));
 
   @JsonKey(ignore: true)
   @override
@@ -203,21 +161,13 @@ class _$PlaylistModelImpl extends _PlaylistModel {
 }
 
 abstract class _PlaylistModel extends PlaylistModel {
-  const factory _PlaylistModel(
-      {required final int id,
-      @JsonKey(name: "user_id") required final int userId,
-      final String? name,
-      final List<int?>? songs}) = _$PlaylistModelImpl;
+  const factory _PlaylistModel({final String? name, final List<int?>? songs}) =
+      _$PlaylistModelImpl;
   const _PlaylistModel._() : super._();
 
   factory _PlaylistModel.fromJson(Map<String, dynamic> json) =
       _$PlaylistModelImpl.fromJson;
 
-  @override
-  int get id;
-  @override
-  @JsonKey(name: "user_id")
-  int get userId;
   @override
   String? get name;
   @override
