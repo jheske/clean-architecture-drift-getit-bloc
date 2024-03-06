@@ -16,7 +16,7 @@ abstract class AppDatabase {
   Future<List<SongTable>> getSongs();
   Future<SongTable?> getSong(int id);
   Future<PlaylistTable?> getPlaylistByUserId(int id);
-  Future<List<SongTable>> getSongsInPlaylist(int playlistId);
+  Future<List<GetSongsInPlaylistResult>> getSongsInPlaylist(int playlistId);
   Future<List<SongTable>> getSongsByArtist(int artistId);
   Future<List<GetSongsWithArtistsResult>> getSongsWithArtists();
   // CREATE/INSERT and UPDATE Methods

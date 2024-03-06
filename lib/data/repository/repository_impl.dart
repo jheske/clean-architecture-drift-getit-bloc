@@ -64,9 +64,14 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
 
     if (userTable != null) {
       final PlaylistTable? playlistTable = await _db.getPlaylistByUserId(id);
-      final playlistWithSongs = await _db.getSongsInPlaylist(playlistTable!.id);
-      for (var song in playlistWithSongs) {
-        songEntities.add(song.toEntity());
+      final songsInPlaylistResult = await _db.getSongsInPlaylist(playlistTable!.id);
+      for (var song in songsInPlaylistResult) {
+        songEntities.add(SongEntity(
+          id: song.id,
+          name: song.name,
+          duration: song.duration,
+          artistName: song.artistName,
+        ));
       }
       playlistEntity = playlistTable.toEntity(songEntities);
 

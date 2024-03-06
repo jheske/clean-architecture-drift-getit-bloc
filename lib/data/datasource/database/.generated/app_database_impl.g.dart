@@ -1380,17 +1380,25 @@ abstract class _$AppDatabaseImpl extends GeneratedDatabase {
         }).asyncMap(playlist.mapFromRow);
   }
 
-  Selectable<SongTable> _getSongsInPlaylist(int playlistId) {
+  Selectable<GetSongsInPlaylistResult> _getSongsInPlaylist(int playlistId) {
     return customSelect(
-        'SELECT s.* FROM song AS s INNER JOIN playlistwithsongs AS ps ON ps.song_id = s.id INNER JOIN artist AS a ON a.id = s.artist_id WHERE ps.playlist_id = ?1',
+        'SELECT s.*, a.name AS artist_name FROM song AS s INNER JOIN playlistwithsongs AS ps ON ps.song_id = s.id INNER JOIN artist AS a ON a.id = s.artist_id WHERE ps.playlist_id = ?1',
         variables: [
           Variable<int>(playlistId)
         ],
         readsFrom: {
+          artist,
           song,
           playlistwithsongs,
-          artist,
-        }).asyncMap(song.mapFromRow);
+        }).map((QueryRow row) => GetSongsInPlaylistResult(
+          id: row.read<int>('id'),
+          name: row.read<String>('name'),
+          duration: row.readNullable<int>('duration'),
+          genre: row.readNullable<String>('genre'),
+          album: row.readNullable<String>('album'),
+          artistId: row.read<int>('artist_id'),
+          artistName: row.read<String>('artist_name'),
+        ));
   }
 
   Selectable<SongTable> _getSongsByArtist(int artistId) {
@@ -1513,6 +1521,25 @@ abstract class _$AppDatabaseImpl extends GeneratedDatabase {
           ),
         ],
       );
+}
+
+class GetSongsInPlaylistResult {
+  final int id;
+  final String name;
+  final int? duration;
+  final String? genre;
+  final String? album;
+  final int artistId;
+  final String artistName;
+  GetSongsInPlaylistResult({
+    required this.id,
+    required this.name,
+    this.duration,
+    this.genre,
+    this.album,
+    required this.artistId,
+    required this.artistName,
+  });
 }
 
 class GetSongsWithArtistsResult {

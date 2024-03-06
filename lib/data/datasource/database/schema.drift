@@ -70,7 +70,7 @@ _getPlaylistByUserId:
     LIMIT 1;
 
 _getSongsInPlaylist:
-   SELECT s.*
+   SELECT s.*, a.name AS artist_name
    FROM song AS s
    INNER JOIN playlistwithsongs AS ps ON ps.song_id = s.id
    INNER JOIN artist AS a ON a.id = s.artist_id
