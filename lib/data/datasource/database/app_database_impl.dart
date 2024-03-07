@@ -118,10 +118,10 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
       companion.album.value,
       companion.artistId.value,
     );
-    // final song = await _getSongById(id).getSingleOrNull();
-    // if (kDebugMode) {
-    //   print('[insertSong]: $song');
-    // }
+    final song = await _getSongById(id).getSingleOrNull();
+    if (kDebugMode) {
+      print('[insertSong]: $song');
+    }
     return id;
   }
 

@@ -19,7 +19,7 @@ import 'model/music_model.dart';
 
 part '.generated/app_api_service.g.dart';
 
-@RestApi(baseUrl: 'https://mocki.io/v1/50e26bd0-27e6-4183-93fc-ca9da2662366')
+@RestApi(baseUrl: 'https://mocki.io/v1/f3e736a1-11f3-4cac-bffc-dff296e5fb2d')
 abstract class ApiService {
   factory ApiService(Dio dio) = _ApiService;
 

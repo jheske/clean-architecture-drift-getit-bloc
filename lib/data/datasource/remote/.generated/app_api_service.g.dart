@@ -13,7 +13,7 @@ class _ApiService implements ApiService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://mocki.io/v1/50e26bd0-27e6-4183-93fc-ca9da2662366';
+    baseUrl ??= 'https://mocki.io/v1/f3e736a1-11f3-4cac-bffc-dff296e5fb2d';
   }
 
   final Dio _dio;
@@ -26,8 +26,8 @@ class _ApiService implements ApiService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<MusicModel>>(Options(
+    final _result =
+        await _dio.fetch<Map<String, dynamic>>(_setStreamType<HttpResponse<MusicModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,

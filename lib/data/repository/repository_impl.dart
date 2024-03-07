@@ -121,6 +121,7 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
       entityList.add(SongEntity(
         id: table.id,
         name: table.name,
+        duration: table.duration,
         artistName: table.artistName,
       ));
     }
