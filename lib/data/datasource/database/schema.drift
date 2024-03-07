@@ -10,8 +10,7 @@ CREATE TABLE [artist] (
     id INT NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
     age INT NOT NULL,
-    music_style TEXT NOT NULL,
-    is_active INTEGER DEFAULT 0
+    music_style TEXT NOT NULL
 ) as ArtistTable;
 
 CREATE TABLE [song] (
@@ -93,8 +92,8 @@ _insertUser:
     VALUES (:username, :favorite_song_name);
 
 _insertArtist:
-    INSERT INTO [artist] (id, name, age, music_style, is_active)
-    VALUES (:id, :name, :age, :music_style, :is_active);
+    INSERT INTO [artist] (id, name, age, music_style)
+    VALUES (:id, :name, :age, :music_style);
 
 _insertSong:
     INSERT INTO [song] (id, name, duration, genre, album, artist_id)

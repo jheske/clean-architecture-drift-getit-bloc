@@ -13,7 +13,7 @@ _$SongModelImpl _$$SongModelImplFromJson(Map<String, dynamic> json) =>
       genre: json['genre'] as String?,
       album: json['album'] as String?,
       duration: json['duration'] as int?,
-      artistId: json['artistId'] as int?,
+      artistId: json['artist_id'] as int?,
     );
 
 Map<String, dynamic> _$$SongModelImplToJson(_$SongModelImpl instance) =>
@@ -23,5 +23,5 @@ Map<String, dynamic> _$$SongModelImplToJson(_$SongModelImpl instance) =>
       'genre': instance.genre,
       'album': instance.album,
       'duration': instance.duration,
-      'artistId': instance.artistId,
+      'artist_id': instance.artistId,
     };

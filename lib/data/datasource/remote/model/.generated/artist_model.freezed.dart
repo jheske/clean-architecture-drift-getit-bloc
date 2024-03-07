@@ -25,8 +25,6 @@ mixin _$ArtistModel {
   @JsonKey(name: 'music_style')
   String? get musicStyle => throw _privateConstructorUsedError;
   int? get age => throw _privateConstructorUsedError;
-  @JsonKey(name: 'is_active')
-  int? get isActive => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,8 +42,7 @@ abstract class $ArtistModelCopyWith<$Res> {
       {int id,
       String? name,
       @JsonKey(name: 'music_style') String? musicStyle,
-      int? age,
-      @JsonKey(name: 'is_active') int? isActive});
+      int? age});
 }
 
 /// @nodoc
@@ -65,7 +62,6 @@ class _$ArtistModelCopyWithImpl<$Res, $Val extends ArtistModel>
     Object? name = freezed,
     Object? musicStyle = freezed,
     Object? age = freezed,
-    Object? isActive = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -84,10 +80,6 @@ class _$ArtistModelCopyWithImpl<$Res, $Val extends ArtistModel>
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
               as int?,
-      isActive: freezed == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as int?,
     ) as $Val);
   }
 }
@@ -104,8 +96,7 @@ abstract class _$$ArtistModelImplCopyWith<$Res>
       {int id,
       String? name,
       @JsonKey(name: 'music_style') String? musicStyle,
-      int? age,
-      @JsonKey(name: 'is_active') int? isActive});
+      int? age});
 }
 
 /// @nodoc
@@ -123,7 +114,6 @@ class __$$ArtistModelImplCopyWithImpl<$Res>
     Object? name = freezed,
     Object? musicStyle = freezed,
     Object? age = freezed,
-    Object? isActive = freezed,
   }) {
     return _then(_$ArtistModelImpl(
       id: null == id
@@ -142,10 +132,6 @@ class __$$ArtistModelImplCopyWithImpl<$Res>
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
               as int?,
-      isActive: freezed == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as int?,
     ));
   }
 }
@@ -157,8 +143,7 @@ class _$ArtistModelImpl extends _ArtistModel {
       {required this.id,
       this.name,
       @JsonKey(name: 'music_style') this.musicStyle,
-      this.age,
-      @JsonKey(name: 'is_active') this.isActive})
+      this.age})
       : super._();
 
   factory _$ArtistModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -173,13 +158,10 @@ class _$ArtistModelImpl extends _ArtistModel {
   final String? musicStyle;
   @override
   final int? age;
-  @override
-  @JsonKey(name: 'is_active')
-  final int? isActive;
 
   @override
   String toString() {
-    return 'ArtistModel(id: $id, name: $name, musicStyle: $musicStyle, age: $age, isActive: $isActive)';
+    return 'ArtistModel(id: $id, name: $name, musicStyle: $musicStyle, age: $age)';
   }
 
   @override
@@ -191,15 +173,12 @@ class _$ArtistModelImpl extends _ArtistModel {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.musicStyle, musicStyle) ||
                 other.musicStyle == musicStyle) &&
-            (identical(other.age, age) || other.age == age) &&
-            (identical(other.isActive, isActive) ||
-                other.isActive == isActive));
+            (identical(other.age, age) || other.age == age));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, musicStyle, age, isActive);
+  int get hashCode => Object.hash(runtimeType, id, name, musicStyle, age);
 
   @JsonKey(ignore: true)
   @override
@@ -220,8 +199,7 @@ abstract class _ArtistModel extends ArtistModel {
       {required final int id,
       final String? name,
       @JsonKey(name: 'music_style') final String? musicStyle,
-      final int? age,
-      @JsonKey(name: 'is_active') final int? isActive}) = _$ArtistModelImpl;
+      final int? age}) = _$ArtistModelImpl;
   const _ArtistModel._() : super._();
 
   factory _ArtistModel.fromJson(Map<String, dynamic> json) =
@@ -236,9 +214,6 @@ abstract class _ArtistModel extends ArtistModel {
   String? get musicStyle;
   @override
   int? get age;
-  @override
-  @JsonKey(name: 'is_active')
-  int? get isActive;
   @override
   @JsonKey(ignore: true)
   _$$ArtistModelImplCopyWith<_$ArtistModelImpl> get copyWith =>

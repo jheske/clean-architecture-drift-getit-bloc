@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+///
 /// Copyright (C) 2024 Jill Heske
 /// This file is part of flutter-clean-architecture-drift-retrofit.
 ///
@@ -25,7 +27,7 @@ class SongModel with _$SongModel {
     String? genre,
     String? album,
     int? duration,
-    int? artistId,
+    @JsonKey(name: "artist_id") int? artistId,
   }) = _SongModel;
 
   const SongModel._();

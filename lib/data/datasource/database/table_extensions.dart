@@ -26,7 +26,6 @@ extension ArtistTableExtension on ArtistTable {
       name: name,
       musicStyle: musicStyle,
       age: age,
-      isActive: isActive == 1,
       songs: songs,
     );
   }

@@ -95,12 +95,7 @@ class AppDatabaseImpl extends _$AppDatabaseImpl implements AppDatabase {
   Future<int> insertArtist(ArtistModel model) async {
     final companion = await model.toCompanion();
     final id = await _insertArtist(
-      companion.id.value,
-      companion.name.value,
-      companion.age.value,
-      companion.musicStyle.value,
-      companion.isActive.value,
-    );
+        companion.id.value, companion.name.value, companion.age.value, companion.musicStyle.value);
     return id;
   }
 

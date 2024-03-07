@@ -28,7 +28,8 @@ void main() async {
 
   database.clearDatabase();
 
-  final music = await repository.fetchMusic();
+  //final music = await repository.fetchMusic();
+  final music = await repository.getMockLocalMusic();
   repository.saveToDatabase(music);
 
   final themeStr =

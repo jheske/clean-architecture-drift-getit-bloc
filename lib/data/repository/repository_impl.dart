@@ -10,6 +10,7 @@ import '../../domain/entity/song_entity.dart';
 import '../../domain/entity/user_entity.dart';
 import '../datasource/database/app_database.dart';
 import '../datasource/database/app_database_impl.dart';
+import '../datasource/mock/music_mock_data_source.dart';
 import '../datasource/remote/app_api_service.dart';
 import '../datasource/remote/model/music_model.dart';
 
@@ -124,6 +125,11 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
       ));
     }
     return entityList;
+  }
+
+  @override
+  Future<MusicModel> getMockLocalMusic() async {
+    return MusicModel.fromJson(MusicDataSource.musicDataSource);
   }
 
   @override

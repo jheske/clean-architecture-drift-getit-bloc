@@ -12,5 +12,6 @@ abstract class DatabaseRepository {
   Future<UserEntity?> getUser(int userId);
   Future<List<SongEntity>> getSongs();
   Future<void> saveToDatabase(MusicModel musicModel);
+  Future<MusicModel> getMockLocalMusic();
   Future<MusicModel> fetchMusic();
 }

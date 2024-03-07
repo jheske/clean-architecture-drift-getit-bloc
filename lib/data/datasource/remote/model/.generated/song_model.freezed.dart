@@ -25,6 +25,7 @@ mixin _$SongModel {
   String? get genre => throw _privateConstructorUsedError;
   String? get album => throw _privateConstructorUsedError;
   int? get duration => throw _privateConstructorUsedError;
+  @JsonKey(name: "artist_id")
   int? get artistId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,7 +45,7 @@ abstract class $SongModelCopyWith<$Res> {
       String? genre,
       String? album,
       int? duration,
-      int? artistId});
+      @JsonKey(name: "artist_id") int? artistId});
 }
 
 /// @nodoc
@@ -110,7 +111,7 @@ abstract class _$$SongModelImplCopyWith<$Res>
       String? genre,
       String? album,
       int? duration,
-      int? artistId});
+      @JsonKey(name: "artist_id") int? artistId});
 }
 
 /// @nodoc
@@ -169,7 +170,7 @@ class _$SongModelImpl extends _SongModel {
       this.genre,
       this.album,
       this.duration,
-      this.artistId})
+      @JsonKey(name: "artist_id") this.artistId})
       : super._();
 
   factory _$SongModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -186,6 +187,7 @@ class _$SongModelImpl extends _SongModel {
   @override
   final int? duration;
   @override
+  @JsonKey(name: "artist_id")
   final int? artistId;
 
   @override
@@ -234,7 +236,7 @@ abstract class _SongModel extends SongModel {
       final String? genre,
       final String? album,
       final int? duration,
-      final int? artistId}) = _$SongModelImpl;
+      @JsonKey(name: "artist_id") final int? artistId}) = _$SongModelImpl;
   const _SongModel._() : super._();
 
   factory _SongModel.fromJson(Map<String, dynamic> json) =
@@ -251,6 +253,7 @@ abstract class _SongModel extends SongModel {
   @override
   int? get duration;
   @override
+  @JsonKey(name: "artist_id")
   int? get artistId;
   @override
   @JsonKey(ignore: true)

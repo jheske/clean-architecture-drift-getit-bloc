@@ -19,7 +19,6 @@ class ArtistEntity {
   String? name = '';
   String? musicStyle = '';
   int? age = 0;
-  bool? isActive = false;
   List<SongEntity> songs = [];
 
   ArtistEntity({
@@ -27,7 +26,6 @@ class ArtistEntity {
     this.name,
     this.musicStyle,
     this.age,
-    this.isActive,
     this.songs = const [],
   });
 

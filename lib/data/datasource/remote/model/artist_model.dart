@@ -26,7 +26,6 @@ class ArtistModel with _$ArtistModel {
     String? name,
     @JsonKey(name: 'music_style') String? musicStyle,
     int? age,
-    @JsonKey(name: 'is_active') int? isActive,
   }) = _ArtistModel;
 
   const ArtistModel._();
